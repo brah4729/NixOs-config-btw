@@ -9,14 +9,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     
-    hyprland.url = "github:hyprwm/Hyprland";
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, ... }: {
+  outputs = { self, nixpkgs, home-manager, spicetify-nix } @ inputs: {
     nixosConfigurations.nixos-main = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
+      specialArgs = { inherit inputs; };  # Pass inputs to modules
       modules = [
-        ./hardware-configuration.nix
         ./configuration.nix
         
         home-manager.nixosModules.home-manager
@@ -24,8 +24,13 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.e = import ./home.nix;
-            backupFileExtension = "backup";
+            extraSpecialArgs = { inherit inputs; };  # Pass inputs to Home Manager
+            users.e = {
+              imports = [
+                ./home.nix
+                spicetify-nix.homeManagerModules.default
+              ];
+            };
           };
         }
       ];
