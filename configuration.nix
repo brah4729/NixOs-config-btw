@@ -1,16 +1,3 @@
-{ config, pkgs, ... }:
-
-{
-  imports = [ ./hardware-configuration.nix ];
-
-  # Bootloader
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
-    timeout = 3;
-  };
-
-  # Kernel - Latest for best AMD support
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Networking
@@ -23,14 +10,13 @@
   time.timeZone = "America/New_York";  # CHANGE THIS
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # AMD Graphics - Optimized for Radeon 780M
+  # AMD Graphics
   hardware.opengl = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    #driSupport = true;
+    #driSupport32Bit = true;
   };
 
-  # AMD GPU drivers
   services.xserver.videoDrivers = ["amdgpu"];
 
   # Hyprland
@@ -68,11 +54,14 @@
     description = "Main User";
     extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
     shell = pkgs.bash;
-    initialPassword = "nixos";  # CHANGE ON FIRST LOGIN!
+    initialPassword = "69420";
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # Flatpak
+  services.flatpak.enable = true;
 
   # System packages
   environment.systemPackages = with pkgs; [
@@ -83,19 +72,22 @@
     curl
     htop
     
-    # Hyprland essentials
+    # Terminals
     kitty
+    foot
+    
+    # Hyprland essentials
     waybar
     dunst
-    rofi-wayland
-    swww  # Wallpaper daemon
+    rofi
+    swww
     
     # File management
     thunar
     xfce.thunar-archive-plugin
     xfce.thunar-volman
     
-    # Screenshots and screen recording
+    # Screenshots
     grim
     slurp
     wl-clipboard
@@ -107,15 +99,36 @@
     unzip
     zip
     tree
+    
+    # GUI Text Editors
+    # vscode     # Temporarily disabled - may have insecure deps
+    # sublime4   # Temporarily disabled - may have insecure deps
+    
+    # Terminal utilities
+    ripgrep
+    fd
+    eza
   ];
 
   # Fonts
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-emoji
-    font-awesome
-    jetbrains-mono
-  ];
+fonts.packages = with pkgs; [
+  noto-fonts
+  noto-fonts-color-emoji
+  font-awesome
+  jetbrains-mono
+  fira-code
+  hack-font 
+  nerd-fonts.jetbrains-mono
+  
+ ];
+ fonts.fontconfig = {
+  enable = true;
+  defaultFonts = {
+    monospace = [ "JetBrains Mono Nerd Font" "DejaVu Sans Mono" ];
+    sansSerif = [ "Noto Sans" "DejaVu Sans" ];
+    serif = [ "Noto Serif" "DejaVu Serif" ];
+  };
+};
 
   # Enable flakes
   nix.settings = {
@@ -130,7 +143,7 @@
     options = "--delete-older-than 7d";
   };
 
-  # Environment variables for Wayland
+  # Environment variables
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL = "1";
@@ -139,15 +152,9 @@
   # Shell aliases
   environment.shellAliases = {
     rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#nixos-main";
-    update = "sudo nix flake update /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#nixos-main";
+    update = "sudo nix flake update /etc/nixos && rebuild";
     cleanup = "sudo nix-collect-garbage -d";
   };
-
-  # Enable SSH (optional)
-  # services.openssh.enable = true;
-
-  # Enable CUPS for printing (optional)
-  # services.printing.enable = true;
 
   system.stateVersion = "24.05";
 }
