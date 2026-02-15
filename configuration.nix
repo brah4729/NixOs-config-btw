@@ -45,6 +45,7 @@
   };
 
   # Audio
+
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -57,7 +58,7 @@
   # Bluetooth
   hardware.bluetooth = {
     enable = true;
-    powerOnBoot = true;
+    powerOnBoot = false;
   };
   services.blueman.enable = true;
 
@@ -65,9 +66,9 @@
   users.users.e = {
     isNormalUser = true;
     description = "Main User";
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
     shell = pkgs.bash;
-    initialPassword = "69420";
+    initialPassword = "nixosbtw";
   };
 
   # Allow unfree packages
@@ -84,7 +85,7 @@
     git
     curl
     htop
-    
+
     # Terminals
     kitty
     foot
@@ -112,16 +113,35 @@
     unzip
     zip
     tree
+  wineWowPackages.waylandFull
+ pkgs.winboat
     
     # GUI Text Editors
     # vscode     # Temporarily disabled - may have insecure deps
     # sublime4   # Temporarily disabled - may have insecure deps
-    
     # Terminal utilities
     ripgrep
     fd
     eza
+#decorations 
+    cmatrix 
+    cava 
+(pkgs.wrapOBS {
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs
+      obs-backgroundremoval
+      obs-pipewire-audio-capture
+      obs-vaapi #for AMD hardware acceleration
+      obs-gstreamer
+      obs-vkcapture
+    ];
+  })
   ];
+  #docker 
+  virtualisation.docker = {
+ enable = true;
+enableOnBoot = true;
+};
 
   # Fonts
 fonts.packages = with pkgs; [
