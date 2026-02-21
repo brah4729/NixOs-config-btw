@@ -41,7 +41,11 @@
   # XDG Portal
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [ 
+    pkgs.xdg-desktop-portal-gtk 
+    pkgs.xdg-desktop-portal-hyprland
+    ];
+config.common.default = "*"; 
   };
 
   # Audio

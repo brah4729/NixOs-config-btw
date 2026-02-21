@@ -1,26 +1,34 @@
 { config, pkgs, inputs, ... }:
 
+let
+  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+in
 {
+programs.home-manager.enable = true;
+
+  programs.spicetify = {
+    enable = true;
+    theme = spicePkgs.themes.catppuccin;
+    colorScheme = "mocha";
+# Enable the Marketplace app here
+    enabledCustomApps = with spicePkgs.apps; [
+      marketplace
+    ];
+    enabledExtensions = with spicePkgs.extensions; [
+      adblockify
+      hidePodcasts
+      shuffle
+    ];
+  };
+
+
+
   home.username = "e";
   home.homeDirectory = "/home/e";
   home.stateVersion = "24.05";
 
  
- programs.home-manager.enable = true;
-programs.spicetify = {
-    enable = true;
-    # Theme configuration
-    theme = inputs.spicetify-nix.legacyPackages.${pkgs.system}.themes.catppuccin;
-    colorScheme = "mocha";
-    
-    # Optional: Add extensions
-    enabledExtensions = with inputs.spicetify-nix.legacyPackages.${pkgs.system}.extensions; [
-      adblock           # Blocks Spotify ads
-      fullAppDisplay    # Shows full app name in title
-      shuffle           # Enhanced shuffle
-      # marketplace     # Extension browser (enabled by default)
-    ];
-  };
+ 
 
 
   # Git configuration
@@ -57,8 +65,9 @@ programs.spicetify = {
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
+    viAlias = false;
+    vimAlias = false;
+
     
     plugins = with pkgs.vimPlugins; [
       lazy-nvim
@@ -858,7 +867,7 @@ programs.spicetify = {
 
   #fastfetch
 # In your home-manager configuration
-  programs.fastfetch = {
+ programs.fastfetch = {
     enable = true;
     
     # Package can be customized if needed
@@ -869,6 +878,7 @@ programs.spicetify = {
         type = "nixos";
         width = 35;
         color = {
+        
           keys = [ "#7EBAE4" "#5277C3" ];
         };
       };
@@ -935,7 +945,7 @@ programs.spicetify = {
       ];
     };
   };
-
+ 
   # Additional packages
   home.packages = with pkgs; [
     # System utilities
