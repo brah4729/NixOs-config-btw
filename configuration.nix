@@ -38,6 +38,10 @@
     xwayland.enable = true;
   };
 
+services.xserver = {
+    enable = true;
+    displayManager.lightdm.enable = true;
+  };
   # XDG Portal
   xdg.portal = {
     enable = true;
