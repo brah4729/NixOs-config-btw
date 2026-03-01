@@ -49,7 +49,6 @@ programs.home-manager.enable = true;
     shellAliases = {
       ll = "ls -lah";
       ls = "eza --icons";
-      cat = "bat";
       ".." = "cd ..";
       btw = "echo 'I use NixOS btw'";
     };
@@ -181,11 +180,12 @@ programs.home-manager.enable = true;
           size = 3;
           passes = 1;
         };
-        
-        drop_shadow = true;
-        shadow_range = 4;
-        shadow_render_power = 3;
-        "col.shadow" = "rgba(1a1a1aee)";
+         shadow = {
+          enabled = true;
+          range = 4;
+          render_power = 3;
+          color = "rgba(1a1a1aee)";
+          };
       };
       
       animations = {
@@ -209,11 +209,11 @@ programs.home-manager.enable = true;
       };
       
       master = {
-        new_is_master = true;
+        new_status = "slave";
       };
       
-      gestures = {
-        workspace_swipe = true;
+      gestures ={
+        gesture = "3, horizontal, workspace";
       };
       
       misc = {
@@ -865,87 +865,9 @@ programs.home-manager.enable = true;
     enable = true;
   };
 
-  #fastfetch
-# In your home-manager configuration
- programs.fastfetch = {
-    enable = true;
     
-    # Package can be customized if needed
-    # package = pkgs.fastfetch;
     
-    settings = {
-      logo = {
-        type = "nixos";
-        width = 35;
-        color = {
-        
-          keys = [ "#7EBAE4" "#5277C3" ];
-        };
-      };
-      
-      display = {
-        keyColor = "#7EBAE4";
-        valueColor = "#5277C3";
-      };
-      
-      modules = [
-        {
-          type = "title";
-          format = "{0}@{1}";
-          args = [ "user" "host" ];
-        }
-        "separator"
-        {
-          type = "os";
-          key = "OS";
-        }
-        {
-          type = "host";
-          key = "Host";
-        }
-        {
-          type = "kernel";
-          key = "Kernel";
-        }
-        {
-          type = "uptime";
-          key = "Uptime";
-        }
-        {
-          type = "packages";
-          key = "Packages";
-          format = "{} (nix)";
-        }
-        {
-          type = "shell";
-          key = "Shell";
-        }
-        {
-          type = "terminal";
-          key = "Terminal";
-        }
-        {
-          type = "cpu";
-          key = "CPU";
-          compact = true;
-        }
-        {
-          type = "gpu";
-          key = "GPU";
-        }
-        {
-          type = "memory";
-          key = "Memory";
-        }
-        {
-          type = "disk";
-          key = "Disk";
-        }
-        "separator"
-      ];
-    };
-  };
- 
+   
   # Additional packages
   home.packages = with pkgs; [
     # System utilities
