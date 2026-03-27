@@ -8,16 +8,19 @@ programs.home-manager.enable = true;
 
   programs.spicetify = {
     enable = true;
-    theme = spicePkgs.themes.catppuccin;
-    colorScheme = "mocha";
-# Enable the Marketplace app here
+    colorScheme = "TokyoNight";
+    theme = spicePkgs.themes.text;
+   # Enable the Marketplace app here
     enabledCustomApps = with spicePkgs.apps; [
       marketplace
     ];
+     
+
     enabledExtensions = with spicePkgs.extensions; [
       adblockify
       hidePodcasts
       shuffle
+
     ];
   };
 

@@ -85,6 +85,8 @@ config.common.default = "*";
   # Flatpak
   services.flatpak.enable = true;
 
+services.gvfs.enable = true;
+
   # System packages
   environment.systemPackages = with pkgs; [
     # Essential
@@ -125,7 +127,7 @@ config.common.default = "*";
  pkgs.winboat
     
     # GUI Text Editors
-    # vscode     # Temporarily disabled - may have insecure deps
+    vscode     # Temporarily disabled - may have insecure deps
     # sublime4   # Temporarily disabled - may have insecure deps
     # Terminal utilities
     ripgrep
