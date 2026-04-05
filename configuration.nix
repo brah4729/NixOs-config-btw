@@ -36,21 +36,6 @@
   };
 services.xserver.videoDrivers = ["amdgpu"];
 
-#   # Hyprland
-#   programs.hyprland = {
-#     enable = true;
-#     xwayland.enable = true;
-#   };
-
-#   # XDG Portal
-#   xdg.portal = {
-#     enable = true;
-#     extraPortals = [ 
-#     pkgs.xdg-desktop-portal-gtk 
-#     pkgs.xdg-desktop-portal-hyprland
-#     ];
-# config.common.default = "*"; 
-  # };
   # User account
   users.users.e = {
     isNormalUser = true;
@@ -63,8 +48,6 @@ services.xserver.videoDrivers = ["amdgpu"];
   # Allow unfree packages
    nixpkgs.config.allowUnfree = true;
 
-  # # Flatpak
-  # services.flatpak.enable = true;
 
   # System packages
   environment.systemPackages = with pkgs; [
@@ -133,24 +116,24 @@ enableOnBoot = false;
 };
 
   # Fonts
-fonts.packages = with pkgs; [
-  noto-fonts
-  noto-fonts-color-emoji
-  font-awesome
-  jetbrains-mono
-  fira-code
-  hack-font 
-  nerd-fonts.jetbrains-mono
+# fonts.packages = with pkgs; [
+#   noto-fonts
+#   noto-fonts-color-emoji
+#   font-awesome
+#   jetbrains-mono
+#   fira-code
+#   hack-font 
+#   nerd-fonts.jetbrains-mono
   
- ];
- fonts.fontconfig = {
-  enable = true;
-  defaultFonts = {
-    monospace = [ "JetBrains Mono Nerd Font" "DejaVu Sans Mono" ];
-    sansSerif = [ "Noto Sans" "DejaVu Sans" ];
-    serif = [ "Noto Serif" "DejaVu Serif" ];
-  };
-};
+#  ];
+#  fonts.fontconfig = {
+#   enable = true;
+#   defaultFonts = {
+#     monospace = [ "JetBrains Mono Nerd Font" "DejaVu Sans Mono" ];
+#     sansSerif = [ "Noto Sans" "DejaVu Sans" ];
+#     serif = [ "Noto Serif" "DejaVu Serif" ];
+#   };
+# };
 
   # Enable flakes
   nix.settings = {
