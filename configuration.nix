@@ -121,7 +121,7 @@ config.common.default = "*";
     #pkgs.winboat
     
     # GUI Text Editors
-    # vscode     # Temporarily disabled - may have insecure deps
+     vscode     # Temporarily disabled - may have insecure deps
     # sublime4   # Temporarily disabled - may have insecure deps
     # Terminal utilities
     ripgrep
@@ -187,7 +187,7 @@ fonts.packages = with pkgs; [
   };
 nix.settings = {
     # CRITICAL: Resource limits
-    cores = 2;
+    cores = 4;
     max-jobs = 1;
     
     # CRITICAL: Use binary cache, don't build
