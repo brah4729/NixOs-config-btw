@@ -1,7 +1,12 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ 
+    ./hardware-configuration.nix
+    ./modules/audio.nix
+    ./modules/bluetooth.nix
+    ./modules/desktop.nix
+  ];
 
   # Bootloader
   boot.loader = {
@@ -29,43 +34,23 @@
     #driSupport = true;
     #driSupport32Bit = true;
   };
+services.xserver.videoDrivers = ["amdgpu"];
 
-  services.xserver.videoDrivers = ["amdgpu"];
+#   # Hyprland
+#   programs.hyprland = {
+#     enable = true;
+#     xwayland.enable = true;
+#   };
 
-  # Hyprland
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
-  # XDG Portal
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ 
-    pkgs.xdg-desktop-portal-gtk 
-    pkgs.xdg-desktop-portal-hyprland
-    ];
-config.common.default = "*"; 
-  };
-
-  # Audio
-
- # security.rtkit.enable = true;
-  #services.pipewire = {
-  #  enable = true;
-  #  alsa.enable = true;
-  #  alsa.support32Bit = true;
-  #  pulse.enable = true;
-  #  jack.enable = true;
+#   # XDG Portal
+#   xdg.portal = {
+#     enable = true;
+#     extraPortals = [ 
+#     pkgs.xdg-desktop-portal-gtk 
+#     pkgs.xdg-desktop-portal-hyprland
+#     ];
+# config.common.default = "*"; 
   # };
-
-  # Bluetooth
-  #hardware.bluetooth = {
-   # enable = true;
-   # powerOnBoot = false;
-  #};
-  services.blueman.enable = true;
-
   # User account
   users.users.e = {
     isNormalUser = true;
@@ -76,10 +61,10 @@ config.common.default = "*";
   };
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+   nixpkgs.config.allowUnfree = true;
 
-  # Flatpak
-  services.flatpak.enable = true;
+  # # Flatpak
+  # services.flatpak.enable = true;
 
   # System packages
   environment.systemPackages = with pkgs; [
