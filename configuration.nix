@@ -38,10 +38,6 @@
     xwayland.enable = true;
   };
 
-services.xserver = {
-    enable = true;
-    displayManager.lightdm.enable = true;
-  };
   # XDG Portal
   xdg.portal = {
     enable = true;
@@ -54,20 +50,20 @@ config.common.default = "*";
 
   # Audio
 
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
+ # security.rtkit.enable = true;
+  #services.pipewire = {
+  #  enable = true;
+  #  alsa.enable = true;
+  #  alsa.support32Bit = true;
+  #  pulse.enable = true;
+  #  jack.enable = true;
+  # };
 
   # Bluetooth
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = false;
-  };
+  #hardware.bluetooth = {
+   # enable = true;
+   # powerOnBoot = false;
+  #};
   services.blueman.enable = true;
 
   # User account
@@ -84,8 +80,6 @@ config.common.default = "*";
 
   # Flatpak
   services.flatpak.enable = true;
-
-services.gvfs.enable = true;
 
   # System packages
   environment.systemPackages = with pkgs; [
@@ -123,11 +117,11 @@ services.gvfs.enable = true;
     unzip
     zip
     tree
-  wineWowPackages.waylandFull
- pkgs.winboat
+    wineWowPackages.waylandFull
+    #pkgs.winboat
     
     # GUI Text Editors
-    vscode     # Temporarily disabled - may have insecure deps
+    # vscode     # Temporarily disabled - may have insecure deps
     # sublime4   # Temporarily disabled - may have insecure deps
     # Terminal utilities
     ripgrep
@@ -150,7 +144,7 @@ services.gvfs.enable = true;
   #docker 
   virtualisation.docker = {
  enable = true;
-enableOnBoot = true;
+enableOnBoot = false;
 };
 
   # Fonts

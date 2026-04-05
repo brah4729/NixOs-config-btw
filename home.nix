@@ -875,7 +875,6 @@ programs.home-manager.enable = true;
   home.packages = with pkgs; [
     # System utilities
     btop
-    neofetch
     fastfetch
     playerctl
     pavucontrol
