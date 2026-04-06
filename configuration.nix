@@ -7,6 +7,7 @@
     ./modules/bluetooth.nix
     ./modules/desktop.nix
     ./modules/fonts.nix
+    ./modules/docker.nix
   ];
 
   # Bootloader
