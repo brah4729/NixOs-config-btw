@@ -6,6 +6,7 @@
     ./modules/audio.nix
     ./modules/bluetooth.nix
     ./modules/desktop.nix
+    ./modules/fonts.nix
   ];
 
   # Bootloader
@@ -109,11 +110,7 @@ services.xserver.videoDrivers = ["amdgpu"];
     ];
   })
   ];
-  #docker 
-  virtualisation.docker = {
- enable = true;
-enableOnBoot = false;
-};
+  
 
   # Fonts
 # fonts.packages = with pkgs; [
