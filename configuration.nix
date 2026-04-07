@@ -10,6 +10,7 @@
     ./modules/docker.nix
     ./modules/obs.nix
     ./modules/nix-settings.nix
+    ./modules/packages.nix
   ];
 
   # Bootloader
@@ -53,66 +54,6 @@ services.xserver.videoDrivers = ["amdgpu"];
    nixpkgs.config.allowUnfree = true;
 
 
-  # System packages
-  environment.systemPackages = with pkgs; [
-    # Essential
-    vim
-    wget
-    git
-    curl
-    htop
-
-    # Terminals
-    kitty
-    foot
-    
-    # Hyprland essentials
-    waybar
-    dunst
-    rofi
-    swww
-    
-    # File management
-    thunar
-    xfce.thunar-archive-plugin
-    xfce.thunar-volman
-    
-    # Screenshots
-    grim
-    slurp
-    wl-clipboard
-    
-    # Network
-    networkmanagerapplet
-    
-    # Utilities
-    unzip
-    zip
-    tree
-    wineWowPackages.waylandFull
-    #pkgs.winboat
-    
-    # GUI Text Editors
-     vscode     # Temporarily disabled - may have insecure deps
-    # sublime4   # Temporarily disabled - may have insecure deps
-    # Terminal utilities
-    ripgrep
-    fd
-    eza
-#decorations 
-    cmatrix 
-    cava 
-(pkgs.wrapOBS {
-    plugins = with pkgs.obs-studio-plugins; [
-      wlrobs
-      obs-backgroundremoval
-      obs-pipewire-audio-capture
-      obs-vaapi #for AMD hardware acceleration
-      obs-gstreamer
-      obs-vkcapture
-    ];
-  })
-  ];
   
 
   # Fonts
