@@ -30,7 +30,7 @@
   };
 
   # Time zone and locale
-  time.timeZone = "Indonesia/Jakarta";  # CHANGE THIS
+  time.timeZone = "Asia/Jakarta";  # CHANGE THIS
   i18n.defaultLocale = "en_US.UTF-8";
 
   # AMD Graphics
