@@ -1,5 +1,6 @@
 {config, pkgs, ...}:
 {
+    environment.systemPackages = [
     (pkgs.wrapOBS {
     plugins = with pkgs.obs-studio-plugins; [
       wlrobs
@@ -9,5 +10,6 @@
       obs-gstreamer
       obs-vkcapture
     ];
-  }):
+  })
+];
 }
