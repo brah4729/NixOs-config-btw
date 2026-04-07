@@ -8,6 +8,7 @@
     ./modules/desktop.nix
     ./modules/fonts.nix
     ./modules/docker.nix
+    ./modules/obs.nix
   ];
 
   # Bootloader
@@ -99,41 +100,10 @@ services.xserver.videoDrivers = ["amdgpu"];
     eza
 #decorations 
     cmatrix 
-    cava 
-(pkgs.wrapOBS {
-    plugins = with pkgs.obs-studio-plugins; [
-      wlrobs
-      obs-backgroundremoval
-      obs-pipewire-audio-capture
-      obs-vaapi #for AMD hardware acceleration
-      obs-gstreamer
-      obs-vkcapture
-    ];
-  })
+    cava \
   ];
   
-
-  # Fonts
-# fonts.packages = with pkgs; [
-#   noto-fonts
-#   noto-fonts-color-emoji
-#   font-awesome
-#   jetbrains-mono
-#   fira-code
-#   hack-font 
-#   nerd-fonts.jetbrains-mono
-  
-#  ];
-#  fonts.fontconfig = {
-#   enable = true;
-#   defaultFonts = {
-#     monospace = [ "JetBrains Mono Nerd Font" "DejaVu Sans Mono" ];
-#     sansSerif = [ "Noto Sans" "DejaVu Sans" ];
-#     serif = [ "Noto Serif" "DejaVu Serif" ];
-#   };
-# };
-
-  # Enable flakes
+# Enable flakes
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
