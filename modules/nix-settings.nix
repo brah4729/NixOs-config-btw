@@ -1,11 +1,7 @@
 {config, pkgs, ...}:
 {
 
-  # Enable flakes
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    auto-optimise-store = true;
-  };
+ 
 
   # Automatic garbage collection
   nix.gc = {
@@ -14,6 +10,8 @@
     options = "--delete-older-than 7d";
   };
 nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    auto-optimise-store = true;
     # CRITICAL: Resource limits
     cores = 6;
     max-jobs = 1;
