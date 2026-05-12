@@ -11,7 +11,7 @@
     ./modules/obs.nix
     ./modules/nix-settings.nix
     ./modules/packages.nix
-    ./users/users.nix
+    ./modules/users.nix
     ];
 
   # Bootloader

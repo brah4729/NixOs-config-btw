@@ -41,6 +41,7 @@
     
     # GUI Text Editors
      vscode     # Temporarily disabled - may have insecure deps
+     zed
     # sublime4   # Temporarily disabled - may have insecure deps
     # Terminal utilities
     ripgrep
