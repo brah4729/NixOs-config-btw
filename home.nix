@@ -376,7 +376,7 @@ programs.home-manager.enable = true;
       },
       
       "clock": {
-        "timezone": "Asia/Kolkata",
+        "timezone": "Asia/Jakarta",
         "format": "{:%H:%M}",
         "format-alt": "{:%A, %B %d, %Y (%R)}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",

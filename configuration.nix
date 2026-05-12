@@ -11,7 +11,8 @@
     ./modules/obs.nix
     ./modules/nix-settings.nix
     ./modules/packages.nix
-  ];
+    ./users/users.nix
+    ];
 
   # Bootloader
   boot.loader = {
@@ -30,7 +31,7 @@
   };
 
   # Time zone and locale
-  time.timeZone = "Asia/Jakarta";  # CHANGE THIS
+  time.timeZone = "Asia/Jakarta";  # CHANGE TO YOUR TIMEZONE
   i18n.defaultLocale = "en_US.UTF-8";
 
   # AMD Graphics
@@ -40,16 +41,6 @@
     #driSupport32Bit = true;
   };
 services.xserver.videoDrivers = ["amdgpu"];
-
-  # User account
-  users.users.e = {
-    isNormalUser = true;
-    description = "Main User";
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
-    shell = pkgs.bash;
-    initialPassword = "nixosbtw";
-  };
-
   # Allow unfree packages
    nixpkgs.config.allowUnfree = true;
 
