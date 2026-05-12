@@ -5,7 +5,9 @@
     ./modules/waybar.nix
     ./modules/terminals.nix
     ./modules/editors.nix
-    ./modules/rofi.nix    # ← moved here from inline
+    ./modules/rofi.nix
+    ./modules/hyprlock.nix
+    ./modules/hypridle.nix
   ];
 
   programs.home-manager.enable = true;

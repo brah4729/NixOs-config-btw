@@ -47,13 +47,14 @@
     ripgrep
     fd
     eza
-    #login maanger
-    ly
 #decorations
     cmatrix
     cava
     #etc
     discord
+    #lockscreen
+    hyprlock
+    hypridle
   ];
 
 }
