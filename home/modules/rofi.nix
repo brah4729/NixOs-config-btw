@@ -1,4 +1,4 @@
-{pkgs, ...}
+{pkgs, ...}:
 {
     # Rofi - Custom launcher
     programs.rofi = {

@@ -1,4 +1,4 @@
-{pkgs, ...}
+{pkgs, ...}:
 {
     # Waybar - Use xdg.configFile to write JSONC and CSS files
   xdg.configFile."waybar/config.jsonc".text = ''
@@ -471,5 +471,4 @@
   programs.waybar.enable = true;
 
   #
-}
 }
