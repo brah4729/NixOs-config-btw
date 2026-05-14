@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ 
+  imports = [
     ./hardware-configuration.nix
     ./modules/audio.nix
     ./modules/bluetooth.nix
@@ -12,6 +12,7 @@
     ./modules/nix-settings.nix
     ./modules/packages.nix
     ./modules/users.nix
+    ./modules/battery.nix
     ];
 
   # Bootloader

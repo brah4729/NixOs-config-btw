@@ -26,16 +26,16 @@
           halign = "center";
           valign = "center";
           outline_thickness = 2;
-          dots_size = 0.3;
+          dots_size = 0.12;
           dots_spacing = 0.15;
           outer_color = "rgba(33ccffee)";
           inner_color = "rgba(1e1e2eff)";
           font_color = "rgba(cdd6f4ff)";
           fade_on_empty = true;
-          placeholder_text = "🔒 Password...";
+          placeholder_text = "enter da password";
           check_color = "rgba(00ff99ee)";
           fail_color = "rgba(f38ba8ee)";
-          fail_text = "Wrong password ($ATTEMPTS)";
+          fail_text = "get out ($ATTEMPTS)";
           capslock_color = "rgba(f9e2afee)";
         }
       ];

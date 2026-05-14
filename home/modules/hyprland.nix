@@ -109,7 +109,8 @@
         "$mod, N, exec, $terminal nvim"
 
         # Lock screen
-        "$mod, P, exec, hyprlock"
+        "CTRL_ALT, L, exec, hyprlock"
+        "CTRL_ALT, P, exec, logoutctl"
 
         # Window management
         "$mod, C, killactive"
