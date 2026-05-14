@@ -37,6 +37,7 @@
     zip
     tree
     wineWowPackages.waylandFull
+    alsa-utils
     #pkgs.winboat
 
     # GUI Text Editors
