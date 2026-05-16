@@ -31,6 +31,7 @@
 
     # Network
     networkmanagerapplet
+    openssh
 
     # Utilities
     unzip
