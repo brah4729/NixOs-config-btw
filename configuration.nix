@@ -13,6 +13,7 @@
     ./modules/packages.nix
     ./modules/users.nix
     ./modules/battery.nix
+    ./modules/ssh.nix
     ];
 
   # Bootloader
@@ -55,7 +56,7 @@ systemd.targets.sleep.enable = false;
 systemd.targets.suspend.enable = false;
 systemd.targets.hibernate.enable = false;
 systemd.targets.hybrid-sleep.enable = false;
-services.openssh.enable = true;
+networking.firewall.allowedTCPPorts = [ 22 ];
   # Shell aliases
   environment.shellAliases = {
     rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#nixos-main";
