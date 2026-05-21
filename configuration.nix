@@ -52,10 +52,10 @@ services.xserver.videoDrivers = ["amdgpu"];
     NIXOS_OZONE_WL = "1";
   };
 
-systemd.targets.sleep.enable = false;
-systemd.targets.suspend.enable = false;
+#systemd.targets.sleep.enable = false;
+#systemd.targets.suspend.enable = false;
 systemd.targets.hibernate.enable = false;
-systemd.targets.hybrid-sleep.enable = false;
+#systemd.targets.hybrid-sleep.enable = false;
   # Shell aliases
   environment.shellAliases = {
     rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#nixos-main";

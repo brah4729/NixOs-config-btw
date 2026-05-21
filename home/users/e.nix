@@ -34,6 +34,6 @@ in
     libreoffice-fresh
   ];
 
-  # LazyVim plugin dir
+  # LazyVim plugin dir3
   home.file.".config/nvim/lua/plugins/.keep".text = "";
 }
