@@ -1,5 +1,6 @@
 {pkgs, ...}:
 {
+  #maybe you want to change it since the color scheme is a bit weird but i like it so yeah if you want to change it just change the theme and the extraConfig and it will work by default or just install nixos via graphical installer if you want kde or something else but if you want to use rofi just enable it and it will work by default
     # Rofi - Custom launcher
     programs.rofi = {
         enable = true;

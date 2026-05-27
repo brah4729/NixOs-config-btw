@@ -1,6 +1,9 @@
 {pkgs, ...}:
 {
-    # Waybar - Use xdg.configFile to write JSONC and CSS files
+    # Waybar config btw thanks to a guy on github i just took it and edit it a bit here is the link to the original config
+    #https://github.com/shivalingeshwar6/waybar-minimal
+    #if you are the original author and want to take it down just email or dm me and i will take it down immediately
+    #huge shout out to the original author for making this config and sharing it with the world its really good and i love it so yeah if you want to use it just enable waybar and it will work by default
   xdg.configFile."waybar/config.jsonc".text = ''
     {
       "layer": "top",

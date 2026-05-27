@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  #lazyvim btw this is a neovim config framework that i use and it works really well so yeah if you want to use it just enable neovim and it will be enabled by default
   programs.neovim = {
     enable = true;
     defaultEditor = true;

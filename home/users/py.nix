@@ -1,4 +1,6 @@
 # /etc/nixos/home/users/pydev.nix
+# horay my favorite language just add whatever you want to the home.packages list and it will be installed by default mostly for machine learning 
+
 { pkgs, ... }:
 
 {

@@ -1,6 +1,7 @@
   # Hyprland configuration
 {pkgs, ...}:
 {
+  #hyprland cause its good and i use it so yeah if you want to use it just enable it and it will work by default or just install nixos via graphical installer if you want kde or something else but if you want to use hyprland just enable it and it will work by default
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -17,7 +18,7 @@
         "dunst"
         "swww init"
 	"swww-daemon"
-	"swww img /etc/nixos/images/NixOs.jpg"
+	"swww img /etc/nixos/images/NixOs.jpg" # change the background if you want the image is just a picture of the nixos logo that i found on google and it looks cool idk what to say anymore and this is one of the longest comments in the history of nixos configuration files so yeah if you want to change the background just change the path to the image and it will work by default or just use swww set to set a random wallpaper from a folder just create a folder named image and just change the name for easy path and it will work dont say it only works on my machine or smth since this thign is repoducable you know the basic principle of nixos if it work my machine it works on your machine too if it dont works than you have a skill issue lol uhhhh yeah thats it lol ....
         "nm-applet --indicator"
         "blueman-applet"
         "hypridle"

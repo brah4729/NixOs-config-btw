@@ -43,8 +43,10 @@
     #pkgs.winboat
 
     # GUI Text Editors
-     vscode     # Temporarily disabled - may have insecure deps
-     zed-editor
+     vscode     #absolute classic choice 
+     zed-editor #faster but have a bit issues
+     nvim      #for maniac users who want to use their terminal for everything
+    
     # sublime4   # Temporarily disabled - may have insecure deps
     # Terminal utilities
     ripgrep
@@ -54,7 +56,7 @@
     cmatrix
     cava
     #etc
-    discord
+    discord 
     #lockscreen
     hyprlock
     hypridle

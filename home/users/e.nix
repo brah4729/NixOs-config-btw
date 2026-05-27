@@ -1,4 +1,5 @@
 # /etc/nixos/home/users/e.nix
+# my daily drive just for gaming, spicetify, and some other stuff that i use daily
 { pkgs, inputs, ... }:
 
 let

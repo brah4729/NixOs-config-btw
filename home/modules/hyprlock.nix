@@ -1,5 +1,6 @@
 { ... }:
 {
+  #lock screen horay 
   programs.hyprlock = {
     enable = true;
     settings = {

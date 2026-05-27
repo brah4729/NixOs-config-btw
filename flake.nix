@@ -1,4 +1,5 @@
 {
+  #yay flakes nothing much just for spicetify and also for home manager and also for nixpkgs so yeah if you want to add something just add it to the appropriate section and it will work by default also if you want to add something that is common for all the users just add it to the default.nix file and it will be applied to all the users by default
   description = "NixOS Configuration with Hyprland";
 
   inputs = {

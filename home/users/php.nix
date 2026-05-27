@@ -1,5 +1,5 @@
 { pkgs, ... }:
-
+#for laravel and composer and stuff like that just add whatever you want to the home.packages list and it will be installed by default
 {
   imports = [ ../default.nix ];
 

@@ -4,6 +4,7 @@ let
   spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
 in
 {
+  # Home Manager configuration also this is for my user e and it contains all the configuration for my user e and also the packages that i use for my daily drive and also some other stuff that i use daily so yeah if you want to add something just add it to the appropriate section and it will work by default also if you want to add something that is common for all the users just add it to the default.nix file and it will be applied to all the users by default
 programs.home-manager.enable = true;
 
   programs.spicetify = {

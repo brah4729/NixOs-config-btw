@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 {
+  # User configuration for user e 
   users.users.e = {
     isNormalUser = true;
     description = "e";

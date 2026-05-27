@@ -1,5 +1,6 @@
 { ... }:
 {
+  #what to say just simple idle for hyprland and it works really well so yeah if you want to use it just enable it and it will work by default
   services.hypridle = {
     enable = true;
     settings = {

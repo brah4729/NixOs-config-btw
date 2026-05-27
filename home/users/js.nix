@@ -1,4 +1,6 @@
 # /etc/nixos/home/users/jsdev.nix
+# for my js development needs and stuff like that 
+#mostly just typescrip, bun and npm 
 { pkgs, ... }:
 
 {
