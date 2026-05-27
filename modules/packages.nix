@@ -45,7 +45,7 @@
     # GUI Text Editors
      vscode     #absolute classic choice 
      zed-editor #faster but have a bit issues
-     nvim      #for maniac users who want to use their terminal for everything
+     #nvim      #for maniac users who want to use their terminal for everything #forgot its already in home-manager config my bad
     
     # sublime4   # Temporarily disabled - may have insecure deps
     # Terminal utilities
