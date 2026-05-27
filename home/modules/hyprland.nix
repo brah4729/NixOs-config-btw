@@ -120,6 +120,7 @@
         "$mod, P, pseudo"
         "$mod, J, togglesplit"
         "$mod, F, fullscreen"
+         "$mod SHIFT, F, resizeactive, exact 960 540"
 
         # Focus movement (VIM keys)
         "$mod, H, movefocus, l"
@@ -171,6 +172,7 @@
         ", Print, exec, grim -g \"$(slurp)\" - | wl-copy"
         "$mod, Print, exec, grim - | wl-copy"
         "SHIFT, Print, exec, grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png"
+
       ];
 
       # Volume and brightness bindings
