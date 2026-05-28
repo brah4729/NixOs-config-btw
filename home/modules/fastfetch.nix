@@ -6,8 +6,8 @@
 
       "logo": {
         "source": "/etc/nixos/images/nixoswhite.jpg",
-        "type": "kitty",
-        "width": 20,
+        "type": "sixel",
+        "width": 25,
         "height": 10,
         "padding": {
         "top": 1,
