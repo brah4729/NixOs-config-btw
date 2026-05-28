@@ -30,7 +30,7 @@
       };
 
       colors-dark = {
-        alpha = "0.95";
+        alpha = "0.35";
         background = "1a1b26";
         foreground = "c0caf5";
         regular0 = "15161e";

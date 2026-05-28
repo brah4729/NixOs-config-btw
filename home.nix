@@ -50,6 +50,10 @@ programs.home-manager.enable = true;
   programs.bash = {
     enable = true;
     enableCompletion = true;
+    initExtra = ''
+    # Change the number '35' to choose a different color index
+    export PS1="\[\e[0;37m\][\u@\h:\w]\$ \[\e[0m\]"
+  '';
     shellAliases = {
       ll = "ls -lah";
       ls = "eza --icons";
