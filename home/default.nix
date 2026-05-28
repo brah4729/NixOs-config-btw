@@ -9,6 +9,7 @@
     ./modules/rofi.nix
     ./modules/hyprlock.nix
     ./modules/hypridle.nix
+    ./modules/fastfetch.nix
   ];
 
   programs.home-manager.enable = true;
@@ -37,6 +38,10 @@
         exec hyprland
       fi
     '';
+    initExtra = ''
+    # Change the number '35' to choose a different color index
+    export PS1="\[\e[0;37m\][\u@\h:\w]\$ \[\e[0m\]"
+  '';
   };
 
   home.sessionVariables = {

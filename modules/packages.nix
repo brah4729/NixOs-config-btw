@@ -32,7 +32,7 @@
     # Network
     networkmanagerapplet
     openssh
-
+    lynx # for terminal browsing and testing network connectivity
     # Utilities
     unzip
     zip
