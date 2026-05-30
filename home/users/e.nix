@@ -29,7 +29,6 @@ in
   home.packages = with pkgs; [
     gcc
     nodejs
-    python3
     mpv
     imv
     libreoffice-fresh
