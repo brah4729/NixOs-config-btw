@@ -7,19 +7,21 @@
   home.username = "php";
   home.homeDirectory = "/home/php";
   home.stateVersion = "24.05";
-home.packages = with pkgs; [
-  # PHP with extensions baked in
-  (php.withExtensions ({ enabledExtensions, allExtensions }:
-    enabledExtensions ++ (with allExtensions; [
-      xdebug
-      pcov
-    ])
-  ))
 
-  # PHP tools
-  phpPackages.composer    # composer is enough — install phpunit per project
+  home.packages = with pkgs; [
+    # PHP with extensions baked in
+    (php.buildEnv {
+      extensions = ({ enabled, all }: enabled ++ (with all; [
+        xdebug
+        pcov
+      ]));
+      extraConfig = "";
+    })
 
-  # Laravel helpers
-  nodePackages.npm        # needed for Laravel Mix / Vite
-];
+    # PHP tools
+    phpPackages.composer
+
+    # Laravel helpers
+    nodePackages.npm
+  ];
 }
