@@ -19,10 +19,9 @@
 
     # PHP tools (these are separate packages, not extensions)
     phpPackages.composer
-    phpPackages.phpunit
 
-    # Laravel helpers
-    php83Packages.psysh   # REPL for debugging
+
+    # Laravel helpers  
     nodePackages.npm      # needed for Laravel Mix / Vite
   ];
 }
