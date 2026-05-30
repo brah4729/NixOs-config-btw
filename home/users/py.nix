@@ -1,8 +1,5 @@
-# /etc/nixos/home/users/pydev.nix
-# horay my favorite language just add whatever you want to the home.packages list and it will be installed by default mostly for machine learning 
-
+# /etc/nixos/home/users/py.nix
 { pkgs, ... }:
-
 {
   imports = [ ../default.nix ];
 
@@ -11,12 +8,18 @@
   home.stateVersion = "24.05";
 
   home.packages = with pkgs; [
-    python3
-    python3Packages.pip
-    python3Packages.virtualenv
-    ruff          # fast linter
-    pyright       # LSP
-    poetry
-    jupyter
+    # Python with packages bundled in — the NixOS way
+    (python3.withPackages (ps: with ps; [
+      pip          # works correctly inside withPackages
+      virtualenv
+      jupyter
+      ipykernel
+    ]))
+
+    # Standalone tools (not python packages)
+    ruff      # linter
+    pyright   # LSP
+    poetry    # dependency manager
+    uv        # fast pip replacement, great for venvs
   ];
 }
