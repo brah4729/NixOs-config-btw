@@ -5,7 +5,7 @@
     programs.rofi = {
         enable = true;
     package = pkgs.rofi;
-    theme = "DarkBlue";
+    theme = "sidebar";
     extraConfig = {
       modi = "drun,run,window";
       show-icons = true;
