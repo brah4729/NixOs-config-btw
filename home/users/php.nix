@@ -22,6 +22,6 @@
     phpPackages.composer
 
     # Laravel helpers
-    nodejs_22
+    nodejs
   ];
 }

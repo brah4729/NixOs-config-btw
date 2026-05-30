@@ -11,7 +11,7 @@
   home.stateVersion = "24.05";
 
   home.packages = with pkgs; [
-    nodejs_22
+    nodejs
     nodePackages.npm
     nodePackages.pnpm
     bun

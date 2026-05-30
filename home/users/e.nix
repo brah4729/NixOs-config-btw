@@ -28,7 +28,7 @@ in
 
   home.packages = with pkgs; [
     gcc
-    nodejs_22
+    nodejs
     python3
     mpv
     imv
