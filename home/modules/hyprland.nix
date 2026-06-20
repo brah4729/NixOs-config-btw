@@ -2,6 +2,7 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
+
     settings = {
 
       # =============================================
@@ -25,7 +26,7 @@
         "waybar"
         "dunst"
         "swww-daemon"
-        "swww img /etc/nixos/images/wallpaper.gif" # change path to your wallpaper
+        "swww img /etc/nixos/images/wallpaper.gif"
         "nm-applet --indicator"
         "blueman-applet"
         "hypridle"
@@ -50,15 +51,20 @@
         sensitivity  = 0;
 
         touchpad = {
-          natural_scroll     = true;
+          natural_scroll       = true;
           disable_while_typing = true;
+          
         };
       };
 
+      # =============================================
+      # GENERAL
+      # =============================================
       general = {
-        gaps_in    = 5;
-        gaps_out   = 10;
+        gaps_in     = 5;
+        gaps_out    = 10;
         border_size = 2;
+
         "col.active_border"   = "rgba(c0caf5ff)";
         "col.inactive_border" = "rgba(414868ff)";
 
@@ -66,44 +72,50 @@
         allow_tearing = false;
       };
 
+      # =============================================
+      # DECORATION
+      # =============================================
       decoration = {
-        rounding = 0;
+        rounding = 10;
 
         blur = {
-          enabled  = true;
-          size     = 5;
-          passes   = 2;
+          enabled           = true;
+          size              = 5;
+          passes            = 2;
           new_optimizations = true;
         };
 
         shadow = {
-          enabled     = true;
-          range       = 8;
+          enabled      = true;
+          range        = 8;
           render_power = 3;
-          color       = "rgba(1a1a2eee)";
+          color        = "rgba(1a1a2eee)";
         };
 
-        # Dim inactive windows slightly
-        dim_inactive   = true;
-        dim_strength   = 0.05;
+        dim_inactive = true;
+        dim_strength = 0.05;
       };
+
+      # =============================================
+      # ANIMATIONS
+      # =============================================
       animations = {
         enabled = true;
 
         bezier = [
           "myBezier, 0.05, 0.9, 0.1, 1.05"
           "linear, 0.0, 0.0, 1.0, 1.0"
-          "overshot, 0.13, 0.99, 0.29, 1.1"
+          "overshot, 0.13, 0.99, 0.85, 1.3"
         ];
 
         animation = [
-          "windows,    1, 7,  myBezier"
-          "windowsOut, 1, 7,  default, popin 80%"
-          "windowsIn,  1, 7,  overshot, popin 80%"
-          "border,     1, 10, default"
-          "borderangle,1, 8,  default"
-          "fade,       1, 7,  default"
-          "workspaces, 1, 6,  overshot, slide"
+          "windows,     1, 7,  myBezier"
+          "windowsOut,  1, 7,  default, popin 80%"
+          "windowsIn,   1, 7,  overshot, popin 80%"
+          "border,      1, 10, default"
+          "borderangle, 1, 8,  default"
+          "fade,        1, 7,  default"
+          "workspaces,  1, 8,  overshot, slide"
         ];
       };
 
@@ -115,16 +127,12 @@
         preserve_split = true;
       };
 
-      master = {
-        new_status = "slave";
+      gestures = {
+        gesture = "3, horizontal, workspace";
       };
 
-      # =============================================
-      # GESTURES
-      # =============================================
-      gestures = {
-        workspace_swipe = true;
-        workspace_swipe_fingers = 3;
+      master = {
+        new_status = "slave";
       };
 
       # =============================================
@@ -137,26 +145,7 @@
       };
 
       # =============================================
-      # WINDOW RULES
-      # =============================================
-      windowrulev2 = [
-        # Float file pickers
-        "float, class:^(xdg-desktop-portal-gtk)$"
-        "float, title:^(Open File)(.*)$"
-        "float, title:^(Select a File)(.*)$"
-
-        # Blur terminal backgrounds
-        "opacity 0.9 0.9, class:^(kitty)$"
-        "opacity 0.9 0.9, class:^(foot)$"
-
-        # Float common tools
-        "float, class:^(pavucontrol)$"
-        "float, class:^(blueman-manager)$"
-        "float, class:^(nm-connection-editor)$"
-      ];
-
-      # =============================================
-      # KEYBINDINGS (your original — untouched)
+      # KEYBINDINGS
       # =============================================
       bind = [
         # Applications
@@ -227,32 +216,37 @@
         "$mod SHIFT, S, movetoworkspace, special:magic"
 
         # Screenshots
-        ", Print,       exec, grim -g \"$(slurp)\" - | wl-copy"
-        "$mod, Print,   exec, grim - | wl-copy"
-        "SHIFT, Print,  exec, grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png"
+        ", Print,      exec, grim -g \"$(slurp)\" - | wl-copy"
+        "$mod, Print,  exec, grim - | wl-copy"
+        "SHIFT, Print, exec, grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png"
       ];
-
-      # Volume / brightness (repeatable)
+      # Volume / brightness
       bindel = [
         ", XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
         ", XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         ", XF86MonBrightnessUp,   exec, brightnessctl set 5%+"
         ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
       ];
-
-      # Media keys (work on lockscreen too)
+      # Media keys
       bindl = [
         ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ", XF86AudioPlay, exec, playerctl play-pause"
         ", XF86AudioNext, exec, playerctl next"
         ", XF86AudioPrev, exec, playerctl previous"
       ];
-
       # Mouse bindings
       bindm = [
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
       ];
-    };
+    }; 
+  extraConfig = ''
+    windowrulev = float 1, class:(pavucontrol)
+    windowrulev = float 1, class:(blueman-manager)
+    windowrulev = float 1, class:(nm-connection-editor)
+    windowrulev = float 1, class:(xdg-desktop-portal-gtk)
+    windowrulev = opacity 0.9 0.9, class:(kitty)
+    windowrulev = opacity 0.9 0.9, class:(foot)
+  '';
   };
 }
