@@ -31,6 +31,7 @@
   networking = {
     hostName = "nixos-main";
     networkmanager.enable = true;
+    useDHCP = false;
   };
 
   # Time zone and locale
