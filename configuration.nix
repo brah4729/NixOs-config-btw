@@ -38,6 +38,9 @@
   time.timeZone = "Asia/Jakarta";  # CHANGE TO YOUR TIMEZONE
   i18n.defaultLocale = "en_US.UTF-8";
 
+
+  # Optional: Enable the Oracle Extension Pack (required for USB 2.0/3.0 support)
+  # Note: This requires accepting a proprietary license
   # AMD Graphics
   hardware.opengl = {
     enable = true;

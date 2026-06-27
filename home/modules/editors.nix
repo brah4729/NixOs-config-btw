@@ -1,6 +1,37 @@
 { pkgs, ... }:
+
 {
-  #lazyvim btw this is a neovim config framework that i use and it works really well so yeah if you want to use it just enable neovim and it will be enabled by default
+   #lazyvim btw this is a neovim config framework that i use and it works really well so yeah if you want to use it just enable neovim and it will be enabled by default
+  xdg.configFile."nvim/lua/plugins/user.lua".text = ''
+    return {
+      "vyfor/cord.nvim",
+  build = "./build", -- Required to build the binary component
+  event = "VeryLazy",
+  opts = {},
+      {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v3.x",
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+          "MunifTanjim/nui.nvim",
+        },
+        keys = {
+          { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle file tree" },
+        },
+      },
+
+      -- Example: better buffer tabs
+      {
+        "akinsho/bufferline.nvim",
+        event = "VeryLazy",
+        opts = {},
+      },
+
+      -- Disable a LazyVim default if you want
+      -- { "folke/flash.nvim", enabled = false },
+    }
+  '';
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -26,7 +57,7 @@
       require("lazy").setup({
         spec = {
           { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-          { import = "plugins" },
+          { import = "plugins" }, -- NOW this works! points to xdg.configFile above
         },
         defaults = { lazy = false, version = false },
         checker = { enabled = true },

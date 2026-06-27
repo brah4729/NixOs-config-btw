@@ -9,6 +9,10 @@
     curl
     htop
 
+    #personal 
+    ollama 
+    claude-code
+    proton-vpn
     # Terminals
     kitty
     foot
