@@ -11,10 +11,10 @@
   home.stateVersion = "24.05";
 
   home.packages = with pkgs; [
-    nodePackages.npm
-    nodePackages.pnpm
+    nodejs
+    pnpm
     bun
-    nodePackages.typescript
-    nodePackages.typescript-language-server
+    typescript
+    typescript-language-server
   ];
 }
