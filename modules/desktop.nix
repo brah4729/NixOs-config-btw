@@ -9,8 +9,7 @@
     xdg.portal.extraPortals = [
         pkgs.xdg-desktop-portal-gtk
         pkgs.xdg-desktop-portal-hyprland
-         pkgs.xdg-desktop-portal-kde
-
+        pkgs.kdePackages.xdg-desktop-portal-kde
     ];
     xdg.portal.config.common.default = "*";
     services.flatpak.enable = true;
@@ -19,7 +18,6 @@
     
     
     # Desktop Manager
-services.xserver.enable = true;
 services.displayManager.sddm.enable = true;
 services.desktopManager.plasma6.enable = true;
 }
