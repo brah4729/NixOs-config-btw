@@ -24,25 +24,20 @@
     };
   };
 
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    shellAliases = {
-      ll = "ls -lah";
-      ls = "eza --icons";
-      ".." = "cd ..";
-      btw = "echo 'I use NixOS btw'";
-    };
-    profileExtra = ''
-      if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-        exec hyprland
-      fi
-    '';
-    initExtra = ''
-    # Change the number '35' to choose a different color index
+programs.bash = {
+  enable = true;
+  enableCompletion = true;
+  shellAliases = {
+    ll = "ls -lah";
+    ls = "eza --icons";
+    ".." = "cd ..";
+    btw = "echo 'I use NixOS btw'";
+  };
+  # profileExtra removed — let ly launch the session properly
+  initExtra = ''
     export PS1="\[\e[0;37m\][\u@\h:\w]\$ \[\e[0m\]"
   '';
-  };
+};
 
   home.sessionVariables = {
     EDITOR = "nvim";

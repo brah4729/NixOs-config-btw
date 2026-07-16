@@ -42,11 +42,10 @@
   # Optional: Enable the Oracle Extension Pack (required for USB 2.0/3.0 support)
   # Note: This requires accepting a proprietary license
   # AMD Graphics
-  hardware.opengl = {
-    enable = true;
-    #driSupport = true;
-    #driSupport32Bit = true;
-  };
+hardware.graphics = {
+  enable = true;
+  enable32Bit = true;   # replaces driSupport32Bit, useful for Steam/games
+};
 services.xserver.videoDrivers = ["amdgpu"];
   # Allow unfree packages
    nixpkgs.config.allowUnfree = true;
