@@ -16,4 +16,10 @@
     services.flatpak.enable = true;
     services.gvfs.enable = true;
     services.displayManager.ly.enable = true;
+    
+    
+    # Desktop Manager
+services.xserver.enable = true;
+services.displayManager.sddm.enable = true;
+services.desktopManager.plasma6.enable = true;
 }

@@ -10,7 +10,6 @@
     ./modules/hyprlock.nix
     ./modules/hypridle.nix
     ./modules/fastfetch.nix
-    ./modules/kde-plasma.nix
   ];
 
   programs.home-manager.enable = true;
