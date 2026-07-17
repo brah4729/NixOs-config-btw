@@ -6,8 +6,11 @@ let
   spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
 in
 {
-  imports = [ ../default.nix ];
-  imports = [ inputs.noctalia.homeManagerModules.default ];
+  imports = [ 
+    ../default.nix 
+    inputs.noctalia.homeManagerModules.default
+  
+  ];
 
   home.username = "e";
   home.homeDirectory = "/home/e";
