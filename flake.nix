@@ -10,9 +10,14 @@
     };
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, spicetify-nix } @ inputs: {
+  outputs = { self, nixpkgs, home-manager, spicetify-nix, noctalia } @ inputs: {
     nixosConfigurations.nixos-main = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };

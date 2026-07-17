@@ -7,6 +7,7 @@ let
 in
 {
   imports = [ ../default.nix ];
+  imports = [ inputs.noctalia.homeManagerModules.default ];
 
   home.username = "e";
   home.homeDirectory = "/home/e";
