@@ -23,7 +23,6 @@
       # AUTOSTART
       # =============================================
       exec-once = [
-        "noctalia-shell"
         "waybar"
         "dunst"
         "swww-daemon"

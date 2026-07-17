@@ -9,7 +9,7 @@ in
   imports = [ 
     ../default.nix 
      ../modules/noctalia.nix
-  
+     ../modules/niri.nix         
   ];
 
   home.username = "e";

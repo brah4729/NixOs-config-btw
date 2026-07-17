@@ -4,6 +4,10 @@
         enable = true;
         xwayland.enable = true;
     };
+
+     programs.niri = {
+        enable = true;
+    };
     services.xserver.enable = true;
     xdg.portal.enable = true;
     xdg.portal.extraPortals = [
