@@ -8,7 +8,7 @@ in
 {
   imports = [ 
     ../default.nix 
-    inputs.noctalia.homeManagerModules.default
+     ../modules/noctalia.nix
   
   ];
 
