@@ -14,6 +14,7 @@
     ./modules/users.nix
     ./modules/battery.nix
     ./modules/ssh.nix
+    
     #mostly on modules cuz i want to keep it organized and also i want to be able to easily add or remove modules without having to edit the main configuration file and also i want to be able to easily share my configuration with others without having to share the entire configuration file just share the modules that they are interested in so yeah if you want to add something just add it to the appropriate module and it will work by default
     ];
 
