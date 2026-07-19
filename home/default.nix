@@ -14,6 +14,8 @@
 
   programs.home-manager.enable = true;
 
+  services.ssh-agent.enable = true;
+
   programs.git = {
     enable = true;
     userName = "brah4729";
