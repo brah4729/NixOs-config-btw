@@ -15,8 +15,6 @@
 
     spawn-at-startup = [
       { command = [ "xwayland-satellite" ]; }
-      { command = [ "awww-daemon" ]; }
-      { command = [ "awww" "img" "/etc/nixos/images/NixOs.png" ]; }
       { command = [ "nm-applet" "--indicator" ]; }
       { command = [ "blueman-applet" ]; }
       { command = [ "dunst" ]; }
