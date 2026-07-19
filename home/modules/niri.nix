@@ -29,6 +29,9 @@
       "Ctrl+Alt+B".action.spawn = [ "firefox" ];
       "Mod+N".action.spawn = [ "foot" "nvim" ];
 
+      #settings
+      "Mod+I".action.spawn = [ "noctalia" "msg" "panel-toggle" "settings" ];
+
       #cheatsheet 
       "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
