@@ -15,8 +15,8 @@
 
     spawn-at-startup = [
       { command = [ "xwayland-satellite" ]; }
-      { command = [ "swww-daemon" ]; }
-      { command = [ "swww" "img" "/etc/nixos/images/NixOs.jpg" ]; }
+      { command = [ "awww-daemon" ]; }
+      { command = [ "awww" "img" "/etc/nixos/images/NixOs.png" ]; }
       { command = [ "nm-applet" "--indicator" ]; }
       { command = [ "blueman-applet" ]; }
       { command = [ "dunst" ]; }
@@ -30,6 +30,9 @@
       "Mod+R".action.spawn = [ "rofi" "-show" "drun" ];
       "Ctrl+Alt+B".action.spawn = [ "firefox" ];
       "Mod+N".action.spawn = [ "foot" "nvim" ];
+
+      #cheatsheet 
+      "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
       # Lock / logout
       "Ctrl+Alt+L".action.spawn = [ "swaylock" ];
