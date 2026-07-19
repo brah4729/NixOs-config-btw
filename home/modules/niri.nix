@@ -14,8 +14,9 @@
     outputs."*".scale = 1.0;
 
     spawn-at-startup = [
+      { command = [ "xwayland-satellite" ]; }
       { command = [ "swww-daemon" ]; }
-      { command = [ "swww" "img" "/etc/nixos/images/wallpaper.gif" ]; }
+      { command = [ "swww" "img" "/etc/nixos/images/NixOs.jpg" ]; }
       { command = [ "nm-applet" "--indicator" ]; }
       { command = [ "blueman-applet" ]; }
       { command = [ "dunst" ]; }

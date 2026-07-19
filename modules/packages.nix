@@ -8,6 +8,7 @@
     git
     curl
     htop
+    xwayland-satellite
 
     #personal 
     ollama 
