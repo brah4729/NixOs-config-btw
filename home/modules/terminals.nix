@@ -1,6 +1,5 @@
 { pkgs, ... }:
 {
-  #mostly using foot but kitty is installed too ! so yeah just edit it hoewever you want
   programs.kitty = {
     enable = true;
     theme = "Tokyo Night";
@@ -15,5 +14,6 @@
       window_padding_width = 10;
     };
   };
+
   home.packages = [ pkgs.foot ];
 }
