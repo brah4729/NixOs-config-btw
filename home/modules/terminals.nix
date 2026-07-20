@@ -15,19 +15,5 @@
       window_padding_width = 10;
     };
   };
-
-  programs.foot = {
-    enable = true;
-    settings = {
-      main = {
-        term = "xterm-256color";
-        font = "monospace:size=12";
-        dpi-aware = "yes";
-      };
-
-      mouse = {
-        hide-when-typing = "yes";
-      };
-    };
-  };
+  home.packages = [ pkgs.foot ];
 }

@@ -14,7 +14,7 @@ nix.settings = {
     auto-optimise-store = true;
     # CRITICAL: Resource limits
     cores = 6;
-    max-jobs = 1;
+    max-jobs = 6;
     
     # CRITICAL: Use binary cache, don't build
     substituters = [
