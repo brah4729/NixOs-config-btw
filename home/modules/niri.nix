@@ -30,7 +30,7 @@
       "Mod+N".action.spawn = [ "foot" "nvim" ];
 
       #settings
-      "Mod+I".action.spawn = [ "noctalia" "msg" "panel-toggle" "settings" ];
+      "Mod+I".action.spawn = [ "noctalia" "msg" "settings open" ];
 
       #cheatsheet 
       "Mod+Shift+Slash".action.show-hotkey-overlay = { };
