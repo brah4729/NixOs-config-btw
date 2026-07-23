@@ -30,7 +30,9 @@
       "Mod+N".action.spawn = [ "foot" "nvim" ];
 
       #settings
-      "Mod+I".action.spawn = [ "noctalia" "msg" "settings open" ];
+      "Mod+I".action.spawn = [ "noctalia" "msg" "settings-open" "wallpaper" ];
+      "Mod+Shift+I".action.spawn = [ "noctalia" "msg" "panel-toggle" "noctalia/mpvpaper:picker" ];
+      "Mod+Shift+V".action.spawn = [ "noctalia" "msg" "plugin" "noctalia/mpvpaper:service" "all" "clear-all" ];
 
       #cheatsheet 
       "Mod+Shift+Slash".action.show-hotkey-overlay = { };

@@ -9,6 +9,7 @@
     curl
     htop
     xwayland-satellite
+    mpvpaper
 
     #personal 
     ollama 
