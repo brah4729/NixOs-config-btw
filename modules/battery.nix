@@ -1,12 +1,19 @@
 { config, pkgs, ... }:
 {
   services.power-profiles-daemon.enable = false;
+   systemd.services.asus-battery-charge-limit = {
+    description = "Set ASUS battery charge threshold";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'echo 80 > /sys/class/power_supply/BAT0/charge_control_end_threshold'";
+    };
+  };
+
   services.tlp = {
     enable = true;
     settings = {
-      # Battery threshold
-      START_CHARGE_THRESH_BAT0 = 75;
-      STOP_CHARGE_THRESH_BAT0  = 80;
 
       # Platform profiles
       PLATFORM_PROFILE_ON_BAT = "quiet";
