@@ -13,11 +13,14 @@
 
     outputs."*".scale = 1.0;
 
+spawn-at-startup "noctalia-shell"
+
     spawn-at-startup = [
       { command = [ "xwayland-satellite" ]; }
       { command = [ "nm-applet" "--indicator" ]; }
       { command = [ "blueman-applet" ]; }
       { command = [ "dunst" ]; }
+      
     ];
 
     binds = with pkgs; {

@@ -15,7 +15,11 @@
         pkgs.xdg-desktop-portal-hyprland
         pkgs.kdePackages.xdg-desktop-portal-kde
     ];
-    xdg.portal.config.common.default = "*";
+xdg.portal.config = {
+  common.default = [ "gtk" ];
+  hyprland.default = [ "hyprland" "gtk" ];
+  niri.default = [ "gtk" ];
+};
     services.flatpak.enable = true;
     services.gvfs.enable = true;
     services.displayManager.ly.enable = true;
