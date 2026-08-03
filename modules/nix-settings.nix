@@ -36,5 +36,10 @@ nix.settings = {
     
     # Keep system responsive
     min-free = 4294967296;  # Keep 4GB free
+
+    systemd.tmpfiles.rules = [
+  "d /usr/bin 0755 root root - -"
+  "L+ /usr/bin/prlimit - - - - ${pkgs.util-linux}/bin/prlimit"
+];
    }; 
 }
