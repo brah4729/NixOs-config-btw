@@ -17,9 +17,6 @@
 
     spawn-at-startup = [
       { command = [ "xwayland-satellite" ]; }
-      { command = [ "nm-applet" "--indicator" ]; }
-      { command = [ "blueman-applet" ]; }
-      { command = [ "dunst" ]; }
       { command = [ "noctalia-shell" ]; }
     ];
 
@@ -28,7 +25,7 @@
       "Ctrl+Alt+T".action.spawn = [ "foot" ];
       "Mod+Shift+Q".action.spawn = [ "kitty" ];
       "Mod+E".action.spawn = [ "thunar" ];
-      "Mod+R".action.spawn = [ "rofi" "-show" "drun" ];
+      "Mod+R".action.spawn = [ "noctalia" "msg" "panel-toggle" "launcher" ];
       "Ctrl+Alt+B".action.spawn = [ "firefox" ];
       "Mod+N".action.spawn = [ "foot" "nvim" ];
 
@@ -66,7 +63,7 @@
       # Move windows/columns
       "Mod+Shift+H".action.move-column-left = { };
       "Mod+Shift+L".action.move-column-right = { };
-      "Mod+Shift+K".action.move-window-up = { };
+      "Mod+Shift+K".action.move-window-up = { }; 
       "Mod+Shift+J".action.move-window-down = { };
 
       # Workspaces
@@ -74,7 +71,7 @@
       "Mod+2".action.focus-workspace = 2;
       "Mod+3".action.focus-workspace = 3;
       "Mod+4".action.focus-workspace = 4;
-      "Mod+5".action.focus-workspace = 5;
+      "Mod+5".action.focus-workspace = 5; 
       "Mod+6".action.focus-workspace = 6;
       "Mod+7".action.focus-workspace = 7;
       "Mod+8".action.focus-workspace = 8;
