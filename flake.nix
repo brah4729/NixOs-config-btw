@@ -3,14 +3,17 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
+    lanzaboote = {
+    url = "github:nix-community/lanzaboote"; # check for latest tag
+    inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-
+     
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,14 +24,14 @@
   };
   };
 
-  outputs = { self, nixpkgs, home-manager, spicetify-nix, noctalia, niri } @ inputs: {
+  outputs = { self, nixpkgs, home-manager, spicetify-nix, noctalia, niri, lanzaboote } @ inputs: {
     nixosConfigurations.nixos-main = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
         ./configuration.nix
         inputs.niri.nixosModules.niri  
-
+        inputs.lanzaboote.nixosModules.lanzaboote
         home-manager.nixosModules.home-manager
         {
           home-manager = {
