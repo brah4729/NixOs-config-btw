@@ -64,6 +64,7 @@ systemd.targets.hibernate.enable = false;
   # Shell aliases
   environment.shellAliases = {
     rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#nixos-main";
+    rebuild-boot = "sudo nixos-rebuild boot --flake /etc/nixos#nixos-main";
     update = "sudo nix flake update /etc/nixos && rebuild";
     cleanup = "sudo nix-collect-garbage -d";
   };
