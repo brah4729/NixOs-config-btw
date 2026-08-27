@@ -22,9 +22,10 @@
     url = "github:sodiboo/niri-flake";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  claude-desktop.url = "github:k3d3/claude-desktop-linux-flake";
   };
 
-  outputs = { self, nixpkgs, home-manager, spicetify-nix, noctalia, niri, lanzaboote } @ inputs: {
+  outputs = { self, nixpkgs, home-manager, spicetify-nix, noctalia, niri, lanzaboote, claude-desktop } @ inputs: {
     nixosConfigurations.nixos-main = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
