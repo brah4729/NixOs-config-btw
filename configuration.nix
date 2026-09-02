@@ -39,6 +39,37 @@
   time.timeZone = "Asia/Jakarta";  # CHANGE TO YOUR TIMEZONE
   i18n.defaultLocale = "en_US.UTF-8";
 
+systemd.tmpfiles.rules = [
+  "d /home/e/projects 0755 e users -"
+  "d /home/e/projects/py 0755 e users -"
+  "d /home/e/projects/php 0755 e users -"
+  "d /home/e/projects/js 0755 e users -"
+];
+
+# 2. Bind-mount each user's project folder into e's tree
+fileSystems."/home/e/projects/py" = {
+  device = "/home/pydev/projects";
+  fsType = "none";
+  options = [ "bind" "x-systemd.requires-mounts-for=/home/pydev" ];
+};
+
+fileSystems."/home/e/projects/php" = {
+  device = "/home/php/projects";
+  fsType = "none";
+  options = [ "bind" "x-systemd.requires-mounts-for=/home/php" ];
+};
+
+fileSystems."/home/e/projects/js" = {
+  device = "/home/jsdev/projects";
+  fsType = "none";
+  options = [ "bind" "x-systemd.requires-mounts-for=/home/jsdev" ];
+};
+
+ users.groups.devs = {};
+  users.users.e.extraGroups = [ "devs" ];
+  users.users.pydev.extraGroups = [ "devs" ];
+  users.users.php.extraGroups = [ "devs" ];
+  users.users.jsdev.extraGroups = [ "devs" ];
 
   # Optional: Enable the Oracle Extension Pack (required for USB 2.0/3.0 support)
   # Note: This requires accepting a proprietary license

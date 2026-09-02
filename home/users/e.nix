@@ -36,6 +36,7 @@ in
     mpv
     imv
     libreoffice-fresh
+    inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
   ];
 
   # LazyVim plugin dir3
