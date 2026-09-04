@@ -32,7 +32,6 @@
         inputs.lanzaboote.nixosModules.lanzaboote
         home-manager.nixosModules.home-manager
         nix-hermes.nixosModules.hermes-agent
-  ./hermes.nix   
         {
           home-manager = {
             useGlobalPkgs = true;
