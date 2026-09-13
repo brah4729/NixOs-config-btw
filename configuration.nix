@@ -25,7 +25,7 @@
     efi.canTouchEfiVariables = true;
     timeout = 3;
   };
-
+  system.rebuild.enableNg = false;
   # Kernel - Latest for best AMD support
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
