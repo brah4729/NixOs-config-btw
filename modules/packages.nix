@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{config, pkgs, inputs, ...}:
 {
     # System packages
   environment.systemPackages = with pkgs; [
@@ -67,6 +67,8 @@
     #lockscreen
     hyprlock
     hypridle
+  ]++ [
+    inputs.nix-hermes.packages.${pkgs.system}.hermes-agent
   ];
 
 }
