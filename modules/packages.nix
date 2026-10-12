@@ -64,6 +64,7 @@
     cava
     #etc
     discord 
+    fetch
     #lockscreen
     hyprlock
     hypridle
