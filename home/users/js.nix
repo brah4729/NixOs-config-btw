@@ -15,6 +15,6 @@
     pnpm
     bun
     typescript
-    typescript-language-server
+    #typescript-language-server #broken hash later will enable
   ];
 }

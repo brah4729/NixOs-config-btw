@@ -7,6 +7,7 @@
 
      programs.niri = {
         enable = true;
+        package = pkgs.niri;
     };
     services.xserver.enable = true;
     xdg.portal.enable = true;
