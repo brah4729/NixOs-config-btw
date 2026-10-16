@@ -39,7 +39,7 @@
       "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
       # Lock / logout
-      "Mod+ALT+L".action.spawn = [ " noctalia msg session lock" ];
+      "Mod+ALT+L".action.spawn = [ "noctalia" "msg" "session" "lock" ];
       "Ctrl+Alt+P".action.spawn = [ "wlogout" ];
 
 
