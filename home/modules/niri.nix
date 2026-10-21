@@ -6,7 +6,7 @@
     input = {
       keyboard.xkb.layout = "us";
       touchpad = {
-        natural-scroll = true;
+        natural-scroll = false;
         tap = true;
       };
     };

@@ -50,7 +50,7 @@
         sensitivity  = 0;
 
         touchpad = {
-          natural_scroll       = true;
+          natural_scroll       = false;
           disable_while_typing = true;
           
         };
@@ -122,7 +122,6 @@
       # LAYOUTS
       # =============================================
       dwindle = {
-        pseudotile     = true;
         preserve_split = true;
       };
 
@@ -164,7 +163,7 @@
         "$mod, M, exit"
         "$mod, V, togglefloating"
         "$mod, P, pseudo"
-        "$mod, O, togglesplit"
+        "$mod, O, layoutmsg, togglesplit"
         "$mod, F, fullscreen"
         "$mod SHIFT, F, resizeactive, exact 960 540"
 
@@ -240,12 +239,12 @@
       ];
     }; 
   extraConfig = ''
-    windowrulev2 = float,class:^(pavucontrol)$
-    windowrulev2 = float,class:^(blueman-manager)$
-    windowrulev2 = float,class:^(nm-connection-editor)$
-    windowrulev2 = float,class:^(xdg-desktop-portal-gtk)$
-    windowrulev2 = opacity 0.90 0.90,class:^(kitty)$
-    windowrulev2 = opacity 0.90 0.90,class:^(foot)$
+    windowrule = match:class ^(pavucontrol)$, float on
+    windowrule = match:class ^(blueman-manager)$, float on
+    windowrule = match:class ^(nm-connection-editor)$, float on
+    windowrule = match:class ^(xdg-desktop-portal-gtk)$, float on
+    windowrule = match:class ^(kitty)$, opacity 0.90 0.90
+    windowrule = match:class ^(foot)$, opacity 0.90 0.90
   '';
   };
 }

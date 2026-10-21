@@ -422,6 +422,9 @@ Do not flip `fallback` to work around it; report the package and let the user de
 14. **Secure boot keys** live outside the repo at `/etc/secureboot`. Never copy them in.
 15. **`cuda-maintainers` cache was removed.** It returned HTTP 401. Do not re-add it
     without checking the cache status.
+16. **Hyprland 0.56 syntax.** Use `windowrule = match:class ..., float on`; `togglesplit`
+    is `layoutmsg, togglesplit`; `dwindle:pseudotile` was removed. Verify with
+    `Hyprland --verify-config -c ~/.config/hypr/hyprland.conf`.
 
 ---
 
