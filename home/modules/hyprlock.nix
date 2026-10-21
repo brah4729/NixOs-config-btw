@@ -13,7 +13,7 @@
 
       background = [
         {
-          path = "/etc/nixos/images/NixOs.jpg";
+          path = "/etc/nixos/images/NixOs.png";
           blur_size = 4;
           blur_passes = 3;
           brightness = 0.5;

@@ -4,7 +4,7 @@
     enable = true;
     theme = "Tokyo Night";
     font = {
-      name = "monospace-mono";
+      name = "JetBrainsMono Nerd Font";
       size = 12;
     };
     settings = {

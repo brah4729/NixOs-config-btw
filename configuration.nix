@@ -16,6 +16,7 @@
     ./modules/ssh.nix
     ./modules/boot.nix
     ./modules/hermes.nix
+    ./modules/ollama.nix
     
     #mostly on modules cuz i want to keep it organized and also i want to be able to easily add or remove modules without having to edit the main configuration file and also i want to be able to easily share my configuration with others without having to share the entire configuration file just share the modules that they are interested in so yeah if you want to add something just add it to the appropriate module and it will work by default
     ];
@@ -45,6 +46,9 @@ systemd.tmpfiles.rules = [
   "d /home/e/projects/py 0755 e users -"
   "d /home/e/projects/php 0755 e users -"
   "d /home/e/projects/js 0755 e users -"
+  "d /home/jsdev/projects 2775 jsdev devs -"
+  "d /home/php/projects 2775 php devs -"
+  "d /home/pydev/projects 2775 pydev devs -"
 ];
 
 # 2. Bind-mount each user's project folder into e's tree
@@ -72,6 +76,32 @@ fileSystems."/home/e/projects/js" = {
   users.users.php.extraGroups = [ "devs" ];
   users.users.jsdev.extraGroups = [ "devs" ];
 
+  systemd.services.project-acls = {
+    description = "Normalize shared project ownership and ACLs";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "local-fs.target" "systemd-tmpfiles-setup.service" ];
+    unitConfig.ConditionPathExists = "!/var/lib/project-acls.done";
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      set -eu
+      for spec in "jsdev /home/jsdev/projects" "php /home/php/projects" "pydev /home/pydev/projects"; do
+        set -- $spec
+        user="$1"
+        dir="$2"
+        [ -d "$dir" ] || continue
+        ${pkgs.coreutils}/bin/chown -R "$user:devs" "$dir"
+        ${pkgs.coreutils}/bin/chmod -R g+rwX "$dir"
+        ${pkgs.findutils}/bin/find "$dir" -type d -exec ${pkgs.coreutils}/bin/chmod g+s {} +
+        ${pkgs.acl}/bin/setfacl -R -m g:devs:rwX "$dir"
+        ${pkgs.findutils}/bin/find "$dir" -type d -exec ${pkgs.acl}/bin/setfacl -m d:g:devs:rwx {} +
+      done
+      ${pkgs.coreutils}/bin/touch /var/lib/project-acls.done
+    '';
+  };
+
   # Optional: Enable the Oracle Extension Pack (required for USB 2.0/3.0 support)
   # Note: This requires accepting a proprietary license
   # AMD Graphics
@@ -98,7 +128,7 @@ systemd.targets.hibernate.enable = false;
     rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#nixos-main";
     rebuild-boot = "sudo nixos-rebuild boot --flake /etc/nixos#nixos-main";
     update = "sudo nix flake update /etc/nixos && rebuild";
-    cleanup = "sudo nix-collect-garbage -d";
+    cleanup = "sudo nix-collect-garbage --delete-older-than 14d";
   };
 
   system.stateVersion = "24.05";

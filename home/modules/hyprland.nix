@@ -26,10 +26,9 @@
         "waybar"
         "dunst"
         "swww-daemon"
-        "swww img /etc/nixos/images/wallpaper.gif"
+        "sleep 1; swww img /etc/nixos/images/wallpaper.gif || swww img /etc/nixos/images/nixoswhite.png"
         "nm-applet --indicator"
         "blueman-applet"
-        "hypridle"
       ];
 
       # =============================================
@@ -165,7 +164,7 @@
         "$mod, M, exit"
         "$mod, V, togglefloating"
         "$mod, P, pseudo"
-        "$mod, J, togglesplit"
+        "$mod, O, togglesplit"
         "$mod, F, fullscreen"
         "$mod SHIFT, F, resizeactive, exact 960 540"
 
@@ -241,12 +240,12 @@
       ];
     }; 
   extraConfig = ''
-    windowrulev = float 1, class:(pavucontrol)
-    windowrulev = float 1, class:(blueman-manager)
-    windowrulev = float 1, class:(nm-connection-editor)
-    windowrulev = float 1, class:(xdg-desktop-portal-gtk)
-    windowrulev = opacity 0.9 0.9, class:(kitty)
-    windowrulev = opacity 0.9 0.9, class:(foot)
+    windowrulev2 = float,class:^(pavucontrol)$
+    windowrulev2 = float,class:^(blueman-manager)$
+    windowrulev2 = float,class:^(nm-connection-editor)$
+    windowrulev2 = float,class:^(xdg-desktop-portal-gtk)$
+    windowrulev2 = opacity 0.90 0.90,class:^(kitty)$
+    windowrulev2 = opacity 0.90 0.90,class:^(foot)$
   '';
   };
 }

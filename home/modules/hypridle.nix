@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   #what to say just simple idle for hyprland and it works really well so yeah if you want to use it just enable it and it will work by default
   services.hypridle = {
@@ -23,4 +23,9 @@
       ];
     };
   };
+
+  systemd.user.services.hypridle.Unit.ConditionEnvironment = lib.mkForce [
+    "WAYLAND_DISPLAY"
+    "XDG_CURRENT_DESKTOP=Hyprland"
+  ];
 }

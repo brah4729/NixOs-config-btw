@@ -1,3 +1,6 @@
-/images
-hardware-configuration.nix
-windows
+/images/*
+!/images/NixOs.png
+!/images/nixoswhite.png
+
+windows/
+.rebuild-timestamp-test

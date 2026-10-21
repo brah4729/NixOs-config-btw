@@ -6,7 +6,7 @@
     input = {
       keyboard.xkb.layout = "us";
       touchpad = {
-        natural-scroll = false;
+        natural-scroll = true;
         tap = true;
       };
     };
@@ -39,13 +39,13 @@
       "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
       # Lock / logout
-      "Mod+ALT+L".action.spawn = [ "noctalia" "msg" "session" "lock" ];
+      "Ctrl+Alt+L".action.spawn = [ "noctalia" "msg" "session" "lock" ];
       "Ctrl+Alt+P".action.spawn = [ "wlogout" ];
 
 
 
       # Window management
-      "Mod+Q".action.close-window = { };
+      "Mod+C".action.close-window = { };
       "Mod+M".action.quit = { };
       "Mod+V".action.toggle-window-floating = { };
       "Mod+F".action.fullscreen-window = { };
@@ -79,6 +79,7 @@
       "Mod+7".action.focus-workspace = 7;
       "Mod+8".action.focus-workspace = 8;
       "Mod+9".action.focus-workspace = 9;
+      "Mod+0".action.focus-workspace = 10;
 
       "Mod+Shift+1".action.move-window-to-workspace = 1;
       "Mod+Shift+2".action.move-window-to-workspace = 2;
@@ -89,6 +90,7 @@
       "Mod+Shift+7".action.move-window-to-workspace = 7;
       "Mod+Shift+8".action.move-window-to-workspace = 8;
       "Mod+Shift+9".action.move-window-to-workspace = 9;
+      "Mod+Shift+0".action.move-window-to-workspace = 10;
 
       # Screenshots
       "Print".action.screenshot = { };

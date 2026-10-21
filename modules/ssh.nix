@@ -7,6 +7,7 @@ services.openssh = {
   settings = {
     PermitRootLogin = "no";
     PasswordAuthentication = true; # set to false if using keys only
+    AllowUsers = [ "e" ];
   };
 };
 services.tailscale.enable = true;

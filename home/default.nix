@@ -16,6 +16,8 @@
 
   services.ssh-agent.enable = true;
 
+  programs.firefox.enable = true;
+
   programs.git = {
     enable = true;
     userName = "brah4729";
