@@ -47,6 +47,7 @@
     zip
     tree
     wineWowPackages.waylandFull
+    protonplus
     alsa-utils
     chafa
     supertux #this is important for uhhh idk its just fun game to play and it works well on linux so yeah btw if you remove this the system fails to boot and you have to reinstall nixos so yeah dont remove this one its really important
