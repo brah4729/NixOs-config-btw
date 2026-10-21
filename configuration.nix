@@ -33,8 +33,16 @@
   # Swap - 8 GiB swapfile on the root filesystem
   swapDevices = [{
     device = "/swapfile";
-    size = 8192;
+    size = 8 * 1024;
   }];
+
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 50;
+  };
+
+  boot.kernel.sysctl."vm.swappiness" = 100;
 
   # Networking
   networking = {
