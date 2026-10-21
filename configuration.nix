@@ -30,6 +30,12 @@
   # Kernel - Latest for best AMD support
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Swap - 8 GiB swapfile on the root filesystem
+  swapDevices = [{
+    device = "/swapfile";
+    size = 8192;
+  }];
+
   # Networking
   networking = {
     hostName = "nixos-main";
