@@ -16,6 +16,7 @@
     #personal 
     ollama 
     claude-code
+    opencode
     proton-vpn
     # Terminals
     kitty
