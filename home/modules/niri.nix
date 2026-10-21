@@ -31,7 +31,7 @@
       "Mod+N".action.spawn = [ "foot" "nvim" ];
 
       #settings
-      "Mod+I".action.spawn = [ "noctalia" "msg" "settings-open" "wallpaper" ];
+      "Mod+I".action.spawn = [ "noctalia" "msg" "settings-open" ];
       "Mod+Shift+I".action.spawn = [ "noctalia" "msg" "panel-toggle" "noctalia/mpvpaper:picker" ];
       "Mod+Shift+V".action.spawn = [ "noctalia" "msg" "plugin" "noctalia/mpvpaper:service" "all" "clear-all" ];
 
@@ -39,13 +39,13 @@
       "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
       # Lock / logout
-      "Ctrl+Alt+L".action.spawn = [ "noctalia" "msg" "session" "lock" ];
-      "Ctrl+Alt+P".action.spawn = [ "wlogout" ];
+      "Mod+Alt+L".action.spawn = [ "noctalia" "msg" "session" "lock" ];
+      "Mod+Alt+P".action.spawn = [ "noctalia" "msg" "session" "logout" ];
 
 
 
       # Window management
-      "Mod+C".action.close-window = { };
+      "Mod+Q".action.close-window = { };
       "Mod+M".action.quit = { };
       "Mod+V".action.toggle-window-floating = { };
       "Mod+F".action.fullscreen-window = { };
