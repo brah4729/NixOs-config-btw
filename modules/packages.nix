@@ -1,5 +1,7 @@
 {config, pkgs, inputs, ...}:
 {
+  programs.steam.enable = true;
+
     # System packages
   environment.systemPackages = with pkgs; [
     # Essential
