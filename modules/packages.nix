@@ -15,6 +15,7 @@
 
     #personal 
     ollama 
+    llama-cpp
     claude-code
     opencode
     proton-vpn
