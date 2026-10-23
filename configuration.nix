@@ -143,6 +143,8 @@ systemd.targets.hibernate.enable = false;
     rebuild-boot = "sudo nixos-rebuild boot --flake /etc/nixos#nixos-main";
     update = "sudo nix flake update /etc/nixos && rebuild";
     cleanup = "sudo nix-collect-garbage --delete-older-than 14d";
+    charge100 = "echo 100 | sudo tee /sys/class/power_supply/BAT0/charge_control_end_threshold";
+    charge80  = "echo 80 | sudo tee /sys/class/power_supply/BAT0/charge_control_end_threshold";
   };
 
   system.stateVersion = "24.05";
