@@ -25,6 +25,9 @@ in
     theme = "matrix";
     themePackages = [ matrixTheme ];
     font = "${matrixFont}/share/fonts/PxPlus_IBM_BIOS-2y.ttf";
+    # the firmware leaves the EFI framebuffer at 800x600, which plymouth 26
+    # refuses to draw on unless simpledrm is forced open
+    extraConfig = "UseSimpledrm=2";
   };
 
   boot.consoleLogLevel = 3;
