@@ -47,8 +47,9 @@ still behaves as documented below.
 | Timezone | `Asia/Jakarta` |
 | Locale | `en_US.UTF-8` |
 | Kernel | `linuxPackages_latest` |
-| CPU / GPU | AMD (`kvm-amd`, `amdgpu`), 32-bit graphics enabled |
-| Disk layout | ext4 `/`, vfat `/boot`, no swap |
+| CPU / GPU | AMD (`kvm-amd`, `amdgpu` via `services.xserver.videoDrivers`), 32-bit graphics enabled |
+| Disk layout | ext4 `/`, vfat `/boot` |
+| Swap | 8 GiB `/swapfile`, zram (`zstd`, 50%), `vm.swappiness = 100` |
 | Boot | Lanzaboote secure boot; systemd-boot disabled |
 | Local LLM | Ollama CPU-only at `127.0.0.1:11434`; models pulled manually |
 | UI theme | Tokyo Night, JetBrains Mono Nerd Font, blue/purple accents |
@@ -64,8 +65,8 @@ flake attribute, `networking.hostName`, and any docs together.
 /etc/nixos
 ├── flake.nix                    # inputs, nixosConfigurations.nixos-main, HM wiring
 ├── flake.lock                   # generated; never hand-edit
-├── configuration.nix           # system entry point: imports, networking, boot, users, mounts
-├── hardware-configuration.nix  # generated; tracked, do not hand-edit
+├── configuration.nix           # system entry point: imports, networking, boot, swap, users, mounts
+├── hardware-configuration.nix  # generated; tracked, do not hand-edit (see section 10)
 ├── modules/                    # system-level modules, one topic per file
 │   ├── audio.nix               # PipeWire/JACK/ALSA, low-latency profile
 │   ├── battery.nix             # TLP + ASUS 80% charge limit
@@ -78,11 +79,11 @@ flake attribute, `networking.hostName`, and any docs together.
 │   ├── ollama.nix              # CPU-only Ollama service
 │   ├── nix-settings.nix        # GC, cores/jobs, caches, /usr/bin/prlimit shim
 │   ├── obs.nix                 # wrapOBS with plugins
-│   ├── packages.nix            # system packages and nix-hermes package
+│   ├── packages.nix            # system packages, Steam, nix-hermes package
 │   ├── ssh.nix                 # OpenSSH, Tailscale, nftables/firewall
-│   └── users.nix               # users and groups
+│   └── users.nix               # users and base groups (`devs` is in configuration.nix)
 ├── home/
-│   ├── default.nix             # shared Home Manager config imported by every user
+│   ├── default.nix             # shared Home Manager config, packages, Firefox, git, ssh-agent
 │   ├── modules/                # shared per-desktop/per-app Home Manager modules
 │   │   ├── editors.nix         # Neovim + LazyVim bootstrap
 │   │   ├── fastfetch.nix       # fastfetch config (absolute image path)
@@ -95,7 +96,7 @@ flake attribute, `networking.hostName`, and any docs together.
 │   │   ├── terminals.nix       # kitty + foot
 │   │   └── waybar.nix          # inline Waybar config/style
 │   └── users/
-│       ├── e.nix               # admin daily driver: spicetify, claude-desktop
+│       ├── e.nix               # admin daily driver: spicetify, claude-desktop, MPV, LibreOffice
 │       ├── js.nix              # Node/pnpm/bun/typescript
 │       ├── php.nix             # PHP + Composer + Laravel helpers
 │       └── py.nix              # Python + ruff/pyright/poetry/uv
@@ -140,6 +141,12 @@ home-manager = {
 };
 ```
 
+`inputs.niri.nixosModules.niri` also registers niri-flake's Home Manager module through
+`home-manager.sharedModules` and forces the HM `programs.niri.package` to the NixOS
+`programs.niri.package` (`pkgs.niri`). That is why `home/modules/niri.nix` can set
+`programs.niri.settings` without importing a Home Manager module itself. The NixOS module also
+enables polkit, gnome-keyring, dconf, and a polkit agent as side effects.
+
 All system modules receive `inputs` through `specialArgs = { inherit inputs; }`. Home Manager
 modules receive it through `extraSpecialArgs`. Use `inputs.<name>` directly; do not `import`
 flake inputs from paths.
@@ -171,7 +178,8 @@ and `home.homeDirectory` consistent with the system user.
 | `php` | `networkmanager`, `docker`, `devs` | bash; no `initialPassword` |
 | `pydev` | `networkmanager`, `docker`, `devs` | bash; no `initialPassword` |
 
-`devs` is created in `configuration.nix` and all four users are members.
+`devs` is created in `configuration.nix` (not `modules/users.nix`) and all four users are
+added to it there; `modules/users.nix` only defines the base groups shown above.
 
 Project sharing is implemented with bind mounts:
 
@@ -196,7 +204,12 @@ start the service (see section 11).
 
 - `networking.useDHCP = false`; NetworkManager manages networking.
 - `systemd.targets.hibernate.enable = false`; suspend is left enabled.
-- `hardware.graphics.enable32Bit = true` for Steam/games.
+- Memory is layered: an 8 GiB `/swapfile` plus zram (`zstd`, 50% of RAM) and
+  `vm.swappiness = 100`. `hardware-configuration.nix` still declares `swapDevices = [ ]`;
+  the swapfile is added in `configuration.nix`.
+- `programs.steam.enable = true`; 32-bit graphics are enabled for games.
+- `hardware.enableAllFirmware` and `hardware.enableRedistributableFirmware` are set in both
+  `audio.nix` and `hardware-configuration.nix`; the duplication is harmless.
 - `nixpkgs.config.allowUnfree = true`.
 - `WLR_NO_HARDWARE_CURSORS=1` and `NIXOS_OZONE_WL=1` are set session-wide.
 - Docker is enabled but **does not start on boot** (`enableOnBoot = false`).
@@ -211,7 +224,8 @@ on battery and `performance` on AC. Do not enable PPD alongside TLP.
 ### Secure boot
 
 `modules/boot.nix` uses `lib.mkForce false` on systemd-boot and enables Lanzaboote with
-`pkiBundle = "/etc/secureboot"`. Keep `boot.loader.efi.canTouchEfiVariables = true`.
+`pkiBundle = "/etc/secureboot"`. Keep `boot.loader.efi.canTouchEfiVariables = true`
+(`boot.loader.timeout = 3` is set in `configuration.nix`).
 Do not re-enable systemd-boot or remove the `mkForce` without an explicit request.
 
 ### Nix settings
@@ -263,7 +277,10 @@ manager, Flatpak, GVFS, and the GTK/Hyprland/KDE portals. Portal defaults:
 - niri → `gtk`
 
 `home/default.nix` imports `hyprland.nix`, `waybar.nix`, `terminals.nix`, `editors.nix`,
-`rofi.nix`, `hyprlock.nix`, `hypridle.nix`, and `fastfetch.nix`.
+`rofi.nix`, `hyprlock.nix`, `hypridle.nix`, and `fastfetch.nix`. It also enables Firefox,
+ssh-agent, `programs.git` (identity `brah4729`), bash aliases (`ll`, `ls` → `eza`, `btw`),
+and shared CLI packages (btop, fastfetch, playerctl, pavucontrol, brightnessctl, wlogout,
+p7zip, unrar, Papirus icons).
 
 For user `e`:
 
@@ -308,7 +325,7 @@ cloning it elsewhere breaks wallpapers and the fastfetch logo. `NixOs.png` and
 | Shared app/desktop config | `home/modules/<app>.nix` + import in `home/default.nix` |
 | User-specific package/config | `home/users/<user>.nix` |
 | New flake input | `flake.nix`, plus `nix flake update <input>` |
-| New user | `modules/users.nix`, `home/users/<name>.nix`, `flake.nix` HM block |
+| New user | `modules/users.nix` (base groups), `devs` membership in `configuration.nix`, `home/users/<name>.nix`, `flake.nix` HM block |
 | Host/network/boot/kernel | `configuration.nix` or the relevant `modules/` file |
 | Hardware/disk/firmware | `hardware-configuration.nix` via regeneration, not manual edits |
 
@@ -356,6 +373,9 @@ Interactive shell aliases defined in `configuration.nix`:
 - `rebuild-boot` → `sudo nixos-rebuild boot --flake /etc/nixos#nixos-main`
 - `update` → `sudo nix flake update /etc/nixos && rebuild`
 - `cleanup` → `sudo nix-collect-garbage --delete-older-than 14d`
+- `charge100` / `charge80` → write the ASUS charge limit directly to
+  `/sys/class/power_supply/BAT0/charge_control_end_threshold` (the service still resets it
+  to 80 on boot)
 
 Validation expectations:
 
@@ -396,9 +416,12 @@ Do not flip `fallback` to work around it; report the package and let the user de
 1. **Absolute image paths.** `hyprland.nix`, `hyprlock.nix`, and `fastfetch.nix` hardcode
    `/etc/nixos/images/...`.
 2. **Hardware config is generated.** `hardware-configuration.nix` is tracked and no longer
-   gitignored. Do not delete it from git or rewrite it manually.
-3. **Binary/VM assets are ignored.** `windows/` contains VM images and is gitignored. Do not
-   delete it; it is not reproducible from the flake.
+   gitignored. Do not delete it from git or rewrite it manually. It currently contains
+   hand-added `hardware.enableAllFirmware`/`enableRedistributableFirmware` lines; prefer
+   putting firmware settings in `modules/` and regenerating rather than extending the file.
+3. **Binary/VM assets are ignored.** `windows/` contains VM images and is gitignored, as is
+   the stray `.rebuild-timestamp-test`. Do not delete `windows/`; it is not reproducible from
+   the flake.
 4. **`images/` is mostly ignored.** `NixOs.png` and `nixoswhite.png` are tracked;
    `wallpaper.gif` is local-only. Hyprland falls back to `nixoswhite.png` if the GIF is
    missing. Do not assume a clean clone has the GIF.
@@ -425,6 +448,11 @@ Do not flip `fallback` to work around it; report the package and let the user de
 16. **Hyprland 0.56 syntax.** Use `windowrule = match:class ..., float on`; `togglesplit`
     is `layoutmsg, togglesplit`; `dwindle:pseudotile` was removed. Verify with
     `Hyprland --verify-config -c ~/.config/hypr/hyprland.conf`.
+17. **Expected evaluation warnings.** Home Manager deprecations (`programs.git.settings`,
+    `programs.rofi.settings`, `programs.kitty.themeFile`, `programs.neovim.initLua`, Firefox
+    `configPath`) and nixpkgs renames (`wineWow64Packages`, `awww`, top-level `thunar-*`,
+    `libreoffice`) are present at time of writing. They do not fail evaluation; do not treat
+    them as regressions.
 
 ---
 
@@ -466,7 +494,8 @@ users need it.
 
 ### Add a user
 
-1. Add the system user and groups in `modules/users.nix`.
+1. Add the system user and base groups in `modules/users.nix`; add `devs` membership in
+   `configuration.nix`.
 2. Create `home/users/<name>.nix` with `home.username`, `home.homeDirectory`,
    `home.stateVersion = "24.05"`, and `imports = [ ../default.nix ];`.
 3. Add the `users.<name>` block in `flake.nix` under `home-manager`.
@@ -531,6 +560,7 @@ After editing:
 
 - [ ] `git diff --check`
 - [ ] `nix eval --raw .#nixosConfigurations.nixos-main.config.system.build.toplevel.drvPath`
+- [ ] Review evaluation warnings; known deprecations are listed in section 10
 - [ ] `nix flake check --no-build` or `sudo nixos-rebuild dry-build --flake /etc/nixos#nixos-main`
 - [ ] Summarize changed files and validation results.
 - [ ] State clearly if a real rebuild, lock update, or commit was not performed.
