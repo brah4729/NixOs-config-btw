@@ -15,6 +15,7 @@
     ./modules/battery.nix
     ./modules/ssh.nix
     ./modules/boot.nix
+    ./modules/plymouth.nix
     ./modules/hermes.nix
     ./modules/ollama.nix
     
