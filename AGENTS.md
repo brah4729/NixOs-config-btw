@@ -50,7 +50,8 @@ still behaves as documented below.
 | CPU / GPU | AMD (`kvm-amd`, `amdgpu` via `services.xserver.videoDrivers`), 32-bit graphics enabled |
 | Disk layout | ext4 `/`, vfat `/boot` |
 | Swap | 8 GiB `/swapfile`, zram (`zstd`, 50%), `vm.swappiness = 100` |
-| Boot | Lanzaboote secure boot; systemd-boot disabled |
+| Boot | Lanzaboote secure boot; systemd-boot disabled; `configurationLimit = 3` |
+| Boot splash | Plymouth, `matrix` theme; 800x600 until `amdgpu` loads, then native |
 | Local LLM | Ollama CPU-only at `127.0.0.1:11434`; models pulled manually |
 | UI theme | Tokyo Night, JetBrains Mono Nerd Font, blue/purple accents |
 
@@ -80,6 +81,7 @@ flake attribute, `networking.hostName`, and any docs together.
 │   ├── nix-settings.nix        # GC, cores/jobs, caches, /usr/bin/prlimit shim
 │   ├── obs.nix                 # wrapOBS with plugins
 │   ├── packages.nix            # system packages, Steam, nix-hermes package
+│   ├── plymouth.nix            # Plymouth boot splash: matrix theme, patched, simpledrm
 │   ├── ssh.nix                 # OpenSSH, Tailscale, nftables/firewall
 │   └── users.nix               # users and base groups (`devs` is in configuration.nix)
 ├── home/
@@ -225,8 +227,32 @@ on battery and `performance` on AC. Do not enable PPD alongside TLP.
 
 `modules/boot.nix` uses `lib.mkForce false` on systemd-boot and enables Lanzaboote with
 `pkiBundle = "/etc/secureboot"`. Keep `boot.loader.efi.canTouchEfiVariables = true`
-(`boot.loader.timeout = 3` is set in `configuration.nix`).
-Do not re-enable systemd-boot or remove the `mkForce` without an explicit request.
+(`boot.loader.timeout = 3` is set in `configuration.nix`). It also sets
+`boot.lanzaboote.configurationLimit = 3`; each generation carries its own ~35 MB initrd, so
+`/boot` (255 MB) is tight. Do not re-enable systemd-boot or remove the `mkForce` without an
+explicit request.
+
+### Boot splash
+
+`modules/plymouth.nix` owns the whole splash: `boot.plymouth` with the `matrix` theme
+(`pkgs.plymouth-matrix-theme`, a `script`-module theme), plus `boot.consoleLogLevel = 3`
+and `quiet`, `udev.log_level=3`, `vt.global_cursor_default=0`.
+
+- **The theme is patched.** `matrix.script` is from 2017 and calls `Math.Clamp`, which
+  plymouth 26's script plugin does not have (it only provides `Int`, `Sin`, `Cos`, `Tan`,
+  `Sqrt`, `Random`). The refresh callback threw every frame and drew nothing. `overrideAttrs`
+  rewrites both calls to inline comparisons; without that patch the splash is pure black.
+- **Font** is the exact `PxPlus_IBM_BIOS-2y.ttf` from `pkgs.ultimate-oldschool-pc-font-pack`,
+  copied out by a `runCommand` so the 50 MB / 1,366-font pack stays out of the closure.
+- **`extraConfig = "UseSimpledrm=2"` is required.** Plymouth 26 ignores simpledrm unless
+  `UseSimpledrm` is set, and skips 800x600/640x480/1024x768 simpledrm modes unless forced
+  open. The ASUS firmware leaves the EFI framebuffer at 800x600 and `amdgpu` only loads in
+  stage 2 (~8 s), so without this the splash never appears at all (the 8 s `DeviceTimeout`
+  expires right as Ly starts). Removing it brings the black screen back.
+- Consequence: the splash draws at **800x600** for ~7 s, then `amdgpu` takes over and it
+  re-renders at native 2880x1800 for the last second. Native resolution from the start needs
+  `boot.initrd.kernelModules = [ "amdgpu" ]`, which adds ~34 MB to the initrd (29 MB of
+  amdgpu firmware plus the module) and would force `configurationLimit` down to 2.
 
 ### Nix settings
 
@@ -327,6 +353,7 @@ cloning it elsewhere breaks wallpapers and the fastfetch logo. `NixOs.png` and
 | New flake input | `flake.nix`, plus `nix flake update <input>` |
 | New user | `modules/users.nix` (base groups), `devs` membership in `configuration.nix`, `home/users/<name>.nix`, `flake.nix` HM block |
 | Host/network/boot/kernel | `configuration.nix` or the relevant `modules/` file |
+| Boot splash / Plymouth theme | `modules/plymouth.nix` |
 | Hardware/disk/firmware | `hardware-configuration.nix` via regeneration, not manual edits |
 
 Prefer a topic module over adding more lines to `configuration.nix`. The entry point is kept
@@ -453,6 +480,13 @@ Do not flip `fallback` to work around it; report the package and let the user de
     `configPath`) and nixpkgs renames (`wineWow64Packages`, `awww`, top-level `thunar-*`,
     `libreoffice`) are present at time of writing. They do not fail evaluation; do not treat
     them as regressions.
+18. **Plymouth is fragile in two places.** The `matrix` theme is patched for plymouth 26
+    (no `Math.Clamp`) and the module forces `UseSimpledrm=2`; drop either and the splash is
+    silent-black, with no error anywhere except plymouth's own debug log. To debug one boot,
+    add `plymouth.debug=stream:/dev/kmsg` to `boot.kernelParams` and read
+    `journalctl -b -k | grep -i plymouth`; that is the only way to see the initrd daemon,
+    since it logs to the console, not the journal. The splash is 800x600 until `amdgpu`
+    loads — that is the EFI framebuffer mode, not a bug in the theme.
 
 ---
 
@@ -516,6 +550,29 @@ sudo -u ollama ollama pull llama3.1
 sudo rm /var/lib/project-acls.done
 sudo systemctl restart project-acls
 ```
+
+### Change the boot splash
+
+Everything lives in `modules/plymouth.nix`:
+
+1. Pick a theme package (nixpkgs ships `plymouth-matrix-theme`, `plymouth-themes`, the
+   catppuccin flavours, ...) and put it in `boot.plymouth.themePackages`, then set
+   `boot.plymouth.theme` to the directory name the package installs. If the name is wrong the
+   build fails with "The requested theme: X is not provided by any of the packages in
+   boot.plymouth.themePackages".
+2. Keep `extraConfig = "UseSimpledrm=2"` unless `amdgpu` is in the initrd, otherwise the
+   splash never appears on this machine (see section 5).
+3. `boot.plymouth.font` only affects label-based themes; the `matrix` script loads its font
+   by family name, so the `matrixFont` `runCommand` must keep shipping
+   `PxPlus_IBM_BIOS-2y.ttf` and the script's `font` string must keep matching it.
+4. Only the selected theme (plus themes it references) is copied into the initrd by the NixOS
+   module. Building the initrd may print a cosmetic `Missing theme dependency: matrix.script`
+   warning; the module's dependency scan basenames `ScriptFile=`, and it is harmless.
+
+Verify without rebooting by extracting the initrd: it is a microcode cpio followed by a zstd
+payload, so find the `28 b5 2f fd` magic (offset ~307200 here), `dd` from there, `zstd -dc`,
+then `cpio -it` and check `/etc/plymouth/themes`, `/etc/plymouth/plugins`, and
+`plymouthd.conf` inside.
 
 ### Change wallpapers
 
